@@ -1,0 +1,47 @@
+.circle {
+  width: 32px;
+  height: 32px;
+  background-color: #48abe0;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  animation-name: rotate;
+  animation-duration: 1.2s;
+  animation-iteration-count: infinite;
+  animation-delay: 0ms;
+}
+.first {
+  width: 100%;
+  height: 50%;
+  border-radius: 10rem 10rem 0 0;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.second {
+  width: 16px;
+  height: 32px;
+  background-color: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 0 10rem 10rem 0;
+}
+.third {
+  width: 27px;
+  height: 27px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+@keyframes rotate {
+  form {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

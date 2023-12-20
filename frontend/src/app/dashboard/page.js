@@ -1,10 +1,19 @@
+"use client";
 import { DashboardHead } from "@/components/DashBoardHead";
 import { DashboardBottom } from "@/components/DashboardBottom";
 import { DashboardMid } from "@/components/DashboardMid";
 import { NavBar } from "@/components/NavBar";
 import { DashboardContainer } from "@/components/ScreenContainer";
+import { useAuth } from "../layout";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { isLoggedIn } = useAuth();
+  const router = useRouter();
+  if (!isLoggedIn) {
+    router.push("/");
+    return;
+  }
   return (
     <>
       <NavBar />

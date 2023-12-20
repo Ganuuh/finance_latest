@@ -5,8 +5,10 @@ import { BigButton } from "./BigButton";
 import { useState } from "react";
 import { AlertText } from "./AlertText";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/layout";
 
 export const LogIn = () => {
+  const { signIn } = useAuth();
   const [isShown, setShown] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,12 @@ export const LogIn = () => {
     if (!password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
       setIsStrong(isStrong.push("-Special characters"));
     }
-    isStrong.length < 2 ? router.push("/dashboard") : setError(isStrong);
+    if (isStrong.length < 2) {
+      signIn();
+      router.push("/dashboard");
+    } else {
+      setError(isStrong);
+    }
     setIsStrong(["Must contain"]);
   };
   const isValid = () => {

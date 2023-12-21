@@ -6,14 +6,12 @@ import { useState } from "react";
 import { AlertText } from "./AlertText";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
-import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 
 export const LogIn = () => {
   const { signIn } = useAuth();
   const [isShown, setShown] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isStrong, setIsStrong] = useState(["Must contain"]);
   const [errors, setError] = useState([""]);
   const router = useRouter();
   const isPasswordValid = () => {
@@ -21,8 +19,7 @@ export const LogIn = () => {
       alert("Password must not be empty");
       return;
     }
-    signIn();
-    router.push("/dashboard");
+    signIn(email, password);
   };
   const isValid = () => {
     const includes =

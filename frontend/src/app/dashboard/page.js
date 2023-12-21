@@ -12,10 +12,11 @@ export default function Home() {
   const { isLoggedIn } = useAuth();
   const [color, setColor] = useState(false);
   const router = useRouter();
-  // if (!isLoggedIn) {
-  //   router.push("/");
-  //   return;
-  // }
+  if (!isLoggedIn) {
+    // router.push("/");
+    return null;
+  }
+
   return (
     <>
       <NavBar />

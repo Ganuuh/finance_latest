@@ -6,6 +6,7 @@ import { useState } from "react";
 import { AlertText } from "./AlertText";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
+import { RouterContext } from "next/dist/shared/lib/router-context.shared-runtime";
 
 export const LogIn = () => {
   const { signIn } = useAuth();
@@ -16,32 +17,12 @@ export const LogIn = () => {
   const [errors, setError] = useState([""]);
   const router = useRouter();
   const isPasswordValid = () => {
-    if (password == "") {
+    if (password === "") {
       alert("Password must not be empty");
       return;
     }
-    if (password.length < 10) {
-      setIsStrong(isStrong.push("-Above 10 letters"));
-    }
-    if (!password.match(/[a-z]/)) {
-      setIsStrong(isStrong.push("-Lower case letter"));
-    }
-    if (!password.match(/[A-Z]/)) {
-      setIsStrong(isStrong.push("-Upper case letter"));
-    }
-    if (!password.match(/\d+/)) {
-      setIsStrong(isStrong.push("-Atleast one number"));
-    }
-    if (!password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) {
-      setIsStrong(isStrong.push("-Special characters"));
-    }
-    if (isStrong.length < 2) {
-      signIn();
-      router.push("/dashboard");
-    } else {
-      setError(isStrong);
-    }
-    setIsStrong(["Must contain"]);
+    signIn();
+    router.push("/dashboard");
   };
   const isValid = () => {
     const includes =

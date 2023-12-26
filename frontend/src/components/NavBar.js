@@ -1,7 +1,11 @@
+"use client";
 import Link from "next/link";
 import { NavContainer } from "./ScreenContainer";
+import { useAuth } from "@/app/layout";
 
 export const NavBar = () => {
+  const { setIsShown } = useAuth();
+
   return (
     <div className="w-screen h-fit py-4 px-[120px] flex items-center justify-between bg-[#FFFFFF] text-[#0F172A] fixed top-0 right-0 z-20">
       <NavContainer>
@@ -15,7 +19,12 @@ export const NavBar = () => {
           </Link>
         </div>
         <div className="w-fit h-fit flex gap-6 items-center">
-          <button className="w-[100px] h-[32px] text-[#fff] text-[16px] bg-[#0166FF] rounded-2xl">
+          <button
+            onClick={() => {
+              setIsShown(true);
+            }}
+            className="w-[100px] h-[32px] text-[#fff] text-[16px] bg-[#0166FF] rounded-2xl"
+          >
             + Record
           </button>
           <img

@@ -1,22 +1,35 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
-app.get("/login", (req, res) => {
-  console.log(req);
-  res.send("Hello world");
+
+const users = [{ Email: "ganuu@yahoo.com", Pass: "Ganbold0818!" }];
+
+app.post("/sign-up", (req, res) => {
+  const { password, email, name } = req.body;
+  users.push({ Pass: password, Email: email, Name: name });
+  console.log(users);
+  res.send(users);
 });
 
-app.post("/sign-in", (req, res) => {
+app.post("/", (req, res) => {
   const { password, email } = req.body;
-  if (password === "Ganbold0818!" && email === "ganuu@yahoo.com") {
-    return res.json({
-      token: "123456789",
-    });
+  console.log(typeof email, email);
+  const isUser = users.find((each) => {
+    each === email;
+  });
+  console.log(users);
+  console.log(isUser);
+  if (isUser !== undefined) {
+    const token = jwt.sign({ email }, "secret");
+    res.json(token);
+    console.log(token);
+  } else {
+    res.json("User not found");
   }
-  res.status(401).send({ message: "Invalid credentials" });
 });
 
 const port = 8008;

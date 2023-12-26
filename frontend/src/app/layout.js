@@ -3,14 +3,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const inter = Inter({ subsets: ["latin"] });
 
 const Context = createContext();
 export default function RootLayout({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isReady, setIsReady] = useState(false);
+  const [isShown, setIsShown] = useState(false);
 
   const router = useRouter();
+
   const checkToken = (token) => {
     if (token) {
       setIsLoggedIn(true);
@@ -20,37 +24,60 @@ export default function RootLayout({ children }) {
       setIsLoggedIn(false);
     }
   };
+
   const signIn = async (email, password) => {
     try {
-      const res = await fetch("http://localhost:8008/sign-in", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+      const { data } = await axios.post("http://localhost:8008", {
+        password,
+        email,
       });
-      if (res.status !== 200) {
-        throw new Error("Invalid request");
-      }
-      const data = await res.json();
 
-      checkToken(data.token);
-      console.log(data.token);
+      const token = data;
+      // checkToken(token);
+      console.log(token);
     } catch (err) {
       console.log("Error", err);
     }
+    // try {
+    //   const res = await fetch("http://localhost:8008/sign-in", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-type": "application/json",
+    //     },
+    //     body: JSON.stringify({ email, password }),
+    //   });
+    //   if (res.status !== 200) {
+    //     throw new Error("Invalid request");
+    //   }
+    //   const data = await res.json();
+    //   checkToken(data.token);
+    //   console.log(data.token);}
   };
 
   useEffect(() => {
+    setIsReady(false);
+
     const token = localStorage.getItem("token");
+
     if (token) {
       setIsLoggedIn(true);
     }
+
+    setIsReady(true);
   }, []);
 
   return (
     <html lang="en">
-      <Context.Provider value={{ setIsLoggedIn, isLoggedIn, signIn }}>
+      <Context.Provider
+        value={{
+          setIsLoggedIn,
+          isLoggedIn,
+          signIn,
+          isReady,
+          isShown,
+          setIsShown,
+        }}
+      >
         <body className={inter.className}>{children}</body>
       </Context.Provider>
     </html>

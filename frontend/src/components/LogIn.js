@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Logo } from "./Logo";
 import { BigButton } from "./BigButton";
 import { useState } from "react";
-import { AlertText } from "./AlertText";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
 
@@ -12,7 +11,6 @@ export const LogIn = () => {
   const [isShown, setShown] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setError] = useState([""]);
   const router = useRouter();
   const isPasswordValid = () => {
     if (password === "") {
@@ -24,25 +22,13 @@ export const LogIn = () => {
   const isValid = () => {
     const includes =
       email.includes("@gmail.com") || email.includes("@yahoo.com");
-    includes === true ? isPasswordValid() : alert("Not Valid Email");
+    includes ? isPasswordValid() : alert("Not Valid Email");
   };
   const clickHandler = () => {
     setShown((prev) => !prev);
   };
   return (
     <div className="w-[50%] h-[50%] flex flex-col items-center gap-10">
-      <div
-        className={`w-[25%] h-[25%]  fixed top-[37.5%] left-[62.5%] rounded-lg bg-white flex flex-col gap-4 p-5 ${
-          errors.length > 1 ? "flex" : "hidden"
-        }`}
-      >
-        <p className="w-fit h-fit text-[20px] font-semibold text-black">
-          Password not strong
-        </p>
-        {errors.map((each) => {
-          return <AlertText key={each} text={each} />;
-        })}
-      </div>
       <div className="w-fit flex flex-col gap-[14px] h-fit items-center justify-center">
         <Logo
           height="24px"

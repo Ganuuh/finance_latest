@@ -3,9 +3,12 @@
 import { useAuth } from "@/app/layout";
 import { useState } from "react";
 
+import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
+
 export const AddRecord = () => {
   const { isShown, setIsShown } = useAuth();
-  const [color, setColor] = useState(false);
+
+  const [color, setColor] = useState(true);
   return (
     <>
       <div
@@ -35,11 +38,11 @@ export const AddRecord = () => {
               X
             </p>
           </div>
-          <div className="w-full h-fit flex">
+          <div className="w-full h-fit grid grid-cols-2">
             {/* // Left div */}
-            <div className="w-[50%] h-fit flex flex-col items-center gap-5 p-4">
+            <div className="w-full h-fit flex flex-col items-center gap-5 p-4">
               {/* Income and Expense */}
-              <div className="w-full h-full flex gap-5  rounded-full bg-[#F3F4F6]">
+              <div className="w-full h-full flex  rounded-full bg-[#F3F4F6]">
                 <p
                   onClick={() => {
                     setColor(true);
@@ -76,20 +79,38 @@ export const AddRecord = () => {
                     placeholder="₮ 000.00"
                   ></input>
                 </div>
-                <div className="w-full h-fit flex flex-col items-center">
-                  <label className="w-full h-fit text-[16px] text-black">
-                    Category
-                  </label>
-                  <select className="w-full bg-[#F3F4F6] text-black p-3">
-                    <option className="w-full text-black text-[12px]">
-                      House
-                    </option>
-                  </select>
+                <AddRecordCategory />
+                <div className="w-full h-fit grid grid-cols-2 gap-3">
+                  <div className="w-full h-fit flex flex-col items-start gap-1">
+                    <label className="w-fit h-fit text-black text-[16px]">
+                      Date
+                    </label>
+                    <input
+                      className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
+                      type="date"
+                    ></input>
+                  </div>
+                  <div className="w-full h-fit flex flex-col items-start gap-1">
+                    <label className="w-fit h-fit text-black text-[16px]">
+                      Date
+                    </label>
+                    <input
+                      className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
+                      type="date"
+                    ></input>
+                  </div>
+                </div>
+                <div
+                  className={`w-full h-fit py-3 flex justify-center items-center bg-[${
+                    color ? "#0166FF" : "#16A34A"
+                  }] text-[#F9FAFB] text-[16px] rounded-full`}
+                >
+                  Add Record
                 </div>
               </div>
             </div>
             {/* Right Div */}
-            <div className="w-[50%]"></div>
+            <AddRecordsRight />
           </div>
         </div>
       </div>

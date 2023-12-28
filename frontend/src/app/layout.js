@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+import { api } from "@/common";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,6 +12,8 @@ export default function RootLayout({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isReady, setIsReady] = useState(false);
   const [isShown, setIsShown] = useState(false);
+  const [category, setCategory] = useState(false);
+  const [addCategory, setAddCategory] = useState(false);
 
   const router = useRouter();
 
@@ -27,7 +29,7 @@ export default function RootLayout({ children }) {
 
   const signIn = async (email, password) => {
     try {
-      const { data } = await axios.post("http://localhost:8008", {
+      const { data } = await api.post("/", {
         password,
         email,
       });
@@ -76,6 +78,10 @@ export default function RootLayout({ children }) {
           isReady,
           isShown,
           setIsShown,
+          category,
+          setCategory,
+          addCategory,
+          setAddCategory,
         }}
       >
         <body className={inter.className}>{children}</body>

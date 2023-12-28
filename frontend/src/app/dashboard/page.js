@@ -6,11 +6,12 @@ import { NavBar } from "@/components/NavBar";
 import { DashboardContainer } from "@/components/ScreenContainer";
 import { useAuth } from "../layout";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AddRecord } from "@/components/AddRecord";
+import { AddCategory } from "@/components/AddCategory";
 
 export default function Home() {
-  const { isReady, isLoggedIn, isShown, setIsShown } = useAuth();
+  const { isReady, isLoggedIn } = useAuth();
 
   const router = useRouter();
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function Home() {
   return (
     <>
       <AddRecord />
+      <AddCategory />
       <NavBar />
       <div className="w-screen h-fit bg-[#F3F4F6] flex flex-col mt-[70px] px-[120px] py-8 gap-6">
         <DashboardContainer>

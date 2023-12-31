@@ -1,39 +1,73 @@
 const express = require("express");
+const fs = require("fs").promises;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
-const users = [{ Email: "ganuu@yahoo.com", Pass: "Ganbold0818!" }];
+//Log-in function
+app.post("/log-in", (req, res) => {
+  const { password, email } = req.body;
 
-app.post("/sign-up", (req, res) => {
-  const { password, email, name } = req.body;
-  users.push({ Pass: password, Email: email, Name: name });
-  console.log(users);
-  res.send(users);
+  const filePath = "backend/src/data/users.json";
+
+  const usersRaw = fs.readFile(filePath, "utf8");
+
+  const users = JSON.parse(usersRaw);
+
+  const user = users.find((user) => {
+    user.Email === email;
+  });
+
+  if (!user) {
+    return res.status(401).json({
+      message: "Email is not registered",
+    });
+  }
+
+  if (user.Password !== password) {
+    return res.status(401).json({
+      message: "Password is incorrect",
+    });
+  }
+
+  const token = jwt.sign({ email }, "secret-key", { expiresIn: "1h" });
+
+  res.json({
+    token,
+  });
 });
 
-app.post("/", (req, res) => {
-  const { password, email } = req.body;
-  console.log(typeof email, email);
-  const isUser = users.find((each) => {
-    each === email;
+// Sign-up function
+app.post("/sign-up", async (req, res) => {
+  const { email, password } = req.body;
+
+  const filePath = "backend/src/data/users.json";
+
+  const usersRaw = await fs.readFile(filePath, "utf8");
+
+  const users = JSON.parse(usersRaw);
+
+  const user = users.find((user) => {
+    user.Email === email;
   });
-  console.log(users);
-  console.log(isUser);
-  if (isUser !== undefined) {
-    const token = jwt.sign({ email }, "secret");
-    res.json(token);
-    console.log(token);
-  } else {
-    res.json("User not found");
+
+  if (user) {
+    return res.status(409).json({ message: "User already exists" });
   }
+
+  users.push({ Email: email, Password: password });
+
+  await fs.writeFile(filePath, JSON.stringify(users));
+
+  res.json({ message: "User created" });
 });
 
 const port = 8008;
 
 app.listen(port, () => {
-  console.log("App is listening on " + port + " port");
+  console.log("App is listening on port ", port);
 });

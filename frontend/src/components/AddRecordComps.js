@@ -32,7 +32,7 @@ export const AddRecordCategory = () => {
 
   return (
     <div className="w-full h-fit flex flex-col items-center">
-      <label className="w-full h-fit text-[16px] text-black">Category</label>
+      <label className="w-full h-fit text-[16px] text-black ">Category</label>
       <div className="w-full h-[48px] border-[1px] rounded-md bg-[#F9FAFB] flex items-center justify-around px-3 relative">
         <p className="w-full h-fit text-[14px] text-[#94A3B8]">
           Find or choose category
@@ -56,7 +56,7 @@ export const AddRecordCategory = () => {
             onClick={() => {
               clickHandler();
             }}
-            className="w-full h-fit flex items-center gap-3 py-4 border-b-[1px]"
+            className="w-full h-fit flex items-center gap-3 py-4 border-b-[1px] cursor-pointer"
           >
             <p className="w-fit h-fit text-[#000] text-[24px]">+</p>
             <p className="w-fit h-fit text-[16px] text-[#000]">Category</p>

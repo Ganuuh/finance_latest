@@ -103,7 +103,7 @@ export const AddRecord = () => {
                 <div
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
                     color ? "#0166FF" : "#16A34A"
-                  }] text-[#F9FAFB] text-[16px] rounded-full`}
+                  }] text-[#F9FAFB] text-[16px] rounded-full `}
                 >
                   Add Record
                 </div>

@@ -64,6 +64,7 @@ app.post("/sign-up", async (req, res) => {
   await fs.writeFile(filePath, JSON.stringify(users));
 
   res.json({ message: "User created" });
+  console.log("Success");
 });
 
 const port = 8008;

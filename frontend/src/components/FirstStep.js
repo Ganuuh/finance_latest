@@ -5,7 +5,8 @@ import { BigButton } from "./BigButton";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertText } from "./AlertText";
-import axios from "axios";
+
+import { api } from "@/common";
 export const FirstStep = () => {
   const [isShown, setShown] = useState(true);
   const [name, setName] = useState("");
@@ -17,10 +18,9 @@ export const FirstStep = () => {
   const router = useRouter();
   const sendData = async (password, email, name) => {
     try {
-      const { data } = await axios.post("http://localhost:8008/sign-up", {
+      const { data } = await api.post("/sign-up", {
         password,
         email,
-        name,
       });
       console.log(data);
     } catch (err) {
@@ -30,7 +30,7 @@ export const FirstStep = () => {
   const isMathching = () => {
     const passMatch = rePass === password ? true : false;
     setError([""]);
-    // passMatch ? router.push("/secondstep") : alert("Passwords must match");
+
     if (passMatch) {
       sendData(password, email, name);
       router.push("/secondstep");

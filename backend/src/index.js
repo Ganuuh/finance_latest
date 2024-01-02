@@ -144,11 +144,9 @@ app.get("/records", async (req, res) => {
 app.post("/categories", async (req, res) => {
   const { authorization } = req.headers;
 
-  console.log(authorization);
-
   if (!authorization) {
     res.status(401).json({
-      message: "Token not found",
+      message: "Token not found , Unauthorized",
     });
   }
 
@@ -179,6 +177,41 @@ app.post("/categories", async (req, res) => {
   } catch (error) {
     res.status(409).json({
       message: "Error occured",
+    });
+  }
+});
+
+//Get categories by email
+app.get("/get-categories", async (req, res) => {
+  const { authorization } = req.headers;
+
+  if (!authorization) {
+    res.status(401).json({
+      message: "Token not found , Unauthorized",
+    });
+  }
+
+  try {
+    const payload = jwt.verify(authorization, "secret-key");
+
+    const { email } = payload;
+
+    const filePath = "src/data/categories.json";
+
+    const rawFile = await fs.readFile(filePath, "utf8");
+
+    const categories = JSON.parse(rawFile);
+
+    const filteredCategories = categories.filter((each) => {
+      return each.Email === email;
+    });
+
+    res.json({
+      filteredCategories,
+    });
+  } catch (error) {
+    res.json({
+      message: "Error occured in processing",
     });
   }
 });

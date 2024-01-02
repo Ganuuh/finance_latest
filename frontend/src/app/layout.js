@@ -29,31 +29,15 @@ export default function RootLayout({ children }) {
 
   const signIn = async (email, password) => {
     try {
-      const { data } = await api.post("/", {
+      const { data } = await api.post("/log-in", {
         password,
         email,
       });
-
-      const token = data;
-      // checkToken(token);
-      console.log(token);
+      const { token } = data;
+      checkToken(token);
     } catch (err) {
       console.log("Error", err);
     }
-    // try {
-    //   const res = await fetch("http://localhost:8008/sign-in", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-type": "application/json",
-    //     },
-    //     body: JSON.stringify({ email, password }),
-    //   });
-    //   if (res.status !== 200) {
-    //     throw new Error("Invalid request");
-    //   }
-    //   const data = await res.json();
-    //   checkToken(data.token);
-    //   console.log(data.token);}
   };
 
   useEffect(() => {

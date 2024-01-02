@@ -4,11 +4,39 @@ import { useAuth } from "@/app/layout";
 import { useState } from "react";
 
 import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
+import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown } = useAuth();
+  const { isShown, setIsShown, zoos } = useAuth();
+  const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [type, setType] = useState("income");
 
-  const [color, setColor] = useState(true);
+  const postRecord = async (type, amount, category, dateFrom, dateTo) => {
+    console.log(zoos);
+    try {
+      const { data } = await api.post(
+        "/add-record",
+        {
+          type,
+          amount,
+          category,
+          dateFrom,
+          dateTo,
+        },
+        {
+          headers: {
+            Authorization: localStorage.getItem("token"),
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error, "Error");
+    }
+  };
+
   return (
     <>
       <div
@@ -45,10 +73,10 @@ export const AddRecord = () => {
               <div className="w-full h-full flex  rounded-full bg-[#F3F4F6]">
                 <p
                   onClick={() => {
-                    setColor(true);
+                    setType("income");
                   }}
                   className={`w-[50%] h-full flex items-center p-4 justify-center rounded-full cursor-pointer  ${
-                    color
+                    type === "income"
                       ? "text-[#ffffff]  bg-[#0166FF]"
                       : "text-[#000000] bg-[#F3F4F6]"
                   }`}
@@ -57,10 +85,10 @@ export const AddRecord = () => {
                 </p>
                 <p
                   onClick={() => {
-                    setColor(false);
+                    setType("expense");
                   }}
                   className={`w-[50%] h-full flex items-center p-4  justify-center rounded-full cursor-pointer  ${
-                    color
+                    type === "income"
                       ? "text-[#000000] bg-[#F3F4F6]"
                       : "text-[#ffffff]  bg-[#16A34A]"
                   }`}
@@ -74,6 +102,10 @@ export const AddRecord = () => {
                     Amount
                   </label>
                   <input
+                    value={amount}
+                    onChange={(e) => {
+                      setAmount(e.target.value);
+                    }}
                     type="number"
                     className="bg-transparent"
                     placeholder="₮ 000.00"
@@ -86,6 +118,10 @@ export const AddRecord = () => {
                       Date
                     </label>
                     <input
+                      value={dateFrom}
+                      onChange={(e) => {
+                        setDateFrom(e.target.value);
+                      }}
                       className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
                       type="date"
                     ></input>
@@ -95,14 +131,21 @@ export const AddRecord = () => {
                       Date
                     </label>
                     <input
+                      value={dateTo}
+                      onChange={(e) => {
+                        setDateTo(e.target.value);
+                      }}
                       className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
                       type="date"
                     ></input>
                   </div>
                 </div>
                 <div
+                  onClick={() => {
+                    postRecord(type, amount, category, dateFrom, dateTo);
+                  }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
-                    color ? "#0166FF" : "#16A34A"
+                    type === "income" ? "#0166FF" : "#16A34A"
                   }] text-[#F9FAFB] text-[16px] rounded-full `}
                 >
                   Add Record

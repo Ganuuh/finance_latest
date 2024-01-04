@@ -1,1 +1,10 @@
-[{ "name": "Car", "image": "<Localhost/>", "Email": "test-1" }]
+[
+  {
+    "icon": 28,
+    "color": "#0166FF",
+    "name": "Food",
+    "Email": "ganuu@yahoo.com"
+  },
+  { "icon": 15, "color": "#0166FF", "name": "Car", "Email": "ganuu@yahoo.com" },
+  { "icon": 2, "color": "#FF7B01", "name": "Food", "Email": "ganuu@yahoo.com" }
+]

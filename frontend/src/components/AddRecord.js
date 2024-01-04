@@ -1,13 +1,14 @@
 "use client";
 
 import { useAuth } from "@/app/layout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useState } from "react";
-
 import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
 import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown, zoos } = useAuth();
+  const { isShown, setIsShown } = useAuth();
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [dateFrom, setDateFrom] = useState("");
@@ -15,7 +16,6 @@ export const AddRecord = () => {
   const [type, setType] = useState("income");
 
   const postRecord = async (type, amount, category, dateFrom, dateTo) => {
-    console.log(zoos);
     try {
       const { data } = await api.post(
         "/add-record",
@@ -32,6 +32,16 @@ export const AddRecord = () => {
           },
         }
       );
+      toast.info(data.message, {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     } catch (error) {
       console.log(error, "Error");
     }
@@ -39,6 +49,7 @@ export const AddRecord = () => {
 
   return (
     <>
+      <ToastContainer />
       <div
         className={`w-full h-full bg-transparent flex fixed left-0 top-0 z-30 justify-center items-center      ${
           isShown ? "flex" : "hidden"
@@ -74,6 +85,7 @@ export const AddRecord = () => {
                 <p
                   onClick={() => {
                     setType("income");
+                    console.log(type);
                   }}
                   className={`w-[50%] h-full flex items-center p-4 justify-center rounded-full cursor-pointer  ${
                     type === "income"
@@ -86,6 +98,7 @@ export const AddRecord = () => {
                 <p
                   onClick={() => {
                     setType("expense");
+                    console.log(type);
                   }}
                   className={`w-[50%] h-full flex items-center p-4  justify-center rounded-full cursor-pointer  ${
                     type === "income"
@@ -142,7 +155,9 @@ export const AddRecord = () => {
                 </div>
                 <div
                   onClick={() => {
+                    console.log(type);
                     postRecord(type, amount, category, dateFrom, dateTo);
+                    setIsShown(false);
                   }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
                     type === "income" ? "#0166FF" : "#16A34A"

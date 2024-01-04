@@ -1,66 +1,114 @@
 [
   {
-    "type": "expense",
+    "type": "income",
     "amount": "1000",
-    "category": "car",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
     "Email": "test-1"
   },
   {
     "type": "income",
     "amount": "1000",
-    "category": "car",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
     "Email": "test-1"
   },
   {
     "type": "income",
     "amount": "1000",
-    "category": "car",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
-    "Email": "ganuu@yahoo.com"
-  },
-  {
-    "type": "income",
-    "amount": "1000",
-    "category": "car",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
-    "Email": "ganuu@yahoo.com"
-  },
-  {
-    "type": "income",
-    "amount": "1000",
-    "category": "car",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
-    "Email": "ganuu@yahoo.com"
-  },
-  {
-    "type": "income",
-    "amount": "1000",
-    "category": "category",
-    "dateTo": "2004:08:19",
-    "dateFrom": "2024:1;2",
-    "Email": "ganuu@yahoo.com"
-  },
-  {
-    "type": "income",
-    "amount": "",
     "category": "",
-    "dateTo": "",
-    "dateFrom": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "1000",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "23423423",
+    "category": "",
+    "dateTo": "2024-01-25",
+    "dateFrom": "2024-01-19",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "23423423",
+    "category": "",
+    "dateTo": "2024-01-25",
+    "dateFrom": "2024-01-19",
+    "Email": "test-1"
+  },
+  {
+    "type": "expense",
+    "amount": "1000",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "1000",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "expense",
+    "amount": "1000",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "1000",
+    "category": "",
+    "dateTo": "2024-01-03",
+    "dateFrom": "2024-01-02",
+    "Email": "test-1"
+  },
+  {
+    "type": "income",
+    "amount": "35000",
+    "category": "",
+    "dateTo": "2024-01-05",
+    "dateFrom": "2024-01-03",
+    "Email": "ganuu@yahoo.com"
+  },
+  {
+    "type": "income",
+    "amount": "1",
+    "category": "",
+    "dateTo": "2024-01-05",
+    "dateFrom": "2024-01-03",
     "Email": "ganuu@yahoo.com"
   },
   {
     "type": "expense",
-    "amount": "",
+    "amount": "2",
     "category": "",
-    "dateTo": "",
-    "dateFrom": "",
+    "dateTo": "2024-01-05",
+    "dateFrom": "2024-01-03",
+    "Email": "ganuu@yahoo.com"
+  },
+  {
+    "type": "income",
+    "amount": "2",
+    "category": "",
+    "dateTo": "2024-01-05",
+    "dateFrom": "2024-01-03",
     "Email": "ganuu@yahoo.com"
   }
 ]

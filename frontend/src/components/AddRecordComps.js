@@ -1,5 +1,6 @@
 "use client";
 import { useAuth } from "@/app/layout";
+import { useEffect } from "react";
 
 export const AddRecordsRight = () => {
   return (
@@ -23,7 +24,17 @@ export const AddRecordsRight = () => {
 };
 
 export const AddRecordCategory = () => {
-  const { setCategory, category, setIsShown, setAddCategory } = useAuth();
+  const {
+    setCategory,
+    category,
+    setIsShown,
+    setAddCategory,
+    records,
+    getCategory,
+  } = useAuth();
+  useEffect(() => {
+    getCategory();
+  }, []);
   const clickHandler = () => {
     setIsShown(false);
     setAddCategory(true);
@@ -52,6 +63,7 @@ export const AddRecordCategory = () => {
             category ? "flex" : "hidden"
           } top-[110%] h-fit  flex-col px-4 border-[1px] bg-[#FFFFFF] rounded-md`}
         >
+          {/* Add Category */}
           <div
             onClick={() => {
               clickHandler();
@@ -62,7 +74,13 @@ export const AddRecordCategory = () => {
             <p className="w-fit h-fit text-[16px] text-[#000]">Category</p>
           </div>
           <div className="w-full h-fit flex items-center py-4">
-            <p className="text-[#000] text-[14px]">Test</p>
+            {/* {records.map((each, index) => {
+              return (
+                <p key={index} className="text-[#000] text-[14px]">
+                  {each}
+                </p>
+              );
+            })} */}
           </div>
         </div>
       </div>

@@ -3,7 +3,6 @@ const fs = require("fs").promises;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
-const { error } = require("console");
 
 const app = express();
 app.use(cors());
@@ -22,13 +21,13 @@ app.post("/log-in", async (req, res) => {
   const user = users.find((user) => user.Email === email);
 
   if (!user) {
-    return res.status(401).json({
+    res.json({
       message: "Email is not registered",
     });
   }
 
   if (user.Password !== password) {
-    return res.status(401).json({
+    res.json({
       message: "Password is incorrect",
     });
   }
@@ -151,7 +150,7 @@ app.post("/categories", async (req, res) => {
   }
 
   try {
-    const { name, image } = req.body;
+    const { icon, color, name } = req.body;
 
     const filePath = "src/data/categories.json";
 
@@ -164,8 +163,9 @@ app.post("/categories", async (req, res) => {
     const { email } = payload;
 
     categories.push({
+      icon,
+      color,
       name,
-      image,
       Email: email,
     });
 

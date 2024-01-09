@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
+const { Category } = require("./model/category.model");
 
 const app = express();
 app.use(cors());
@@ -143,25 +144,11 @@ app.post("/categories", async (req, res) => {
   try {
     const { icon, color, name } = req.body;
 
-    const filePath = "src/data/categories.json";
-
-    const rawFile = await fs.readFile(filePath, "utf8");
-
-    const categories = JSON.parse(rawFile);
-
-    const payload = jwt.verify(authorization, "secret-key");
-
-    const { email } = payload;
-
-    categories.push({
+    Category.create({
+      name,
       icon,
       color,
-      name,
-      Email: email,
     });
-
-    await fs.writeFile(filePath, JSON.stringify(categories));
-
     res.json({
       message: "Category added succesfully",
     });

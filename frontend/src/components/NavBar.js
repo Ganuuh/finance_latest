@@ -5,7 +5,7 @@ import { useAuth } from "@/app/layout";
 import { useRouter } from "next/navigation";
 
 export const NavBar = () => {
-  const { setIsShown } = useAuth();
+  const { setIsShown, link } = useAuth();
   const router = useRouter();
   const dashboardPush = () => {
     router.push("/dashboard");
@@ -24,7 +24,8 @@ export const NavBar = () => {
             onClick={() => {
               dashboardPush();
             }}
-            className="w-fit h-fit text-[#0F172A] text-[16px]"
+            className="w-fit h-fit text-[#0F172A] text-[16px] cursor-pointer"
+            style={{ fontWeight: link ? "600" : "400" }}
           >
             Dashboard
           </p>
@@ -33,7 +34,8 @@ export const NavBar = () => {
             onClick={() => {
               recordsPush();
             }}
-            className="w-fit h-fit text-[#0F172A] text-[16px]"
+            style={{ fontWeight: link ? "400" : "600" }}
+            className="w-fit h-fit text-[#0F172A] text-[16px] cursor-pointer"
           >
             Records
           </p>

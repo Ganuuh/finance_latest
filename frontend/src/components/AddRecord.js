@@ -16,7 +16,18 @@ export const AddRecord = () => {
   const [type, setType] = useState("income");
 
   const postRecord = async (type, amount, category, dateFrom, dateTo) => {
-    console.log(type, "TYYYYPE");
+    const datas = [amount, category, dateFrom, dateTo];
+    let count = 0;
+    datas.forEach((data) => {
+      if (data === "") {
+        count++;
+        return;
+      }
+    });
+    if (count > 0) {
+      toast.info("Input cannot be empty");
+      return;
+    }
     try {
       const { data } = await api.post(
         "/add-record",
@@ -43,6 +54,12 @@ export const AddRecord = () => {
         progress: undefined,
         theme: "light",
       });
+      setIsShown(false);
+      setCategory("");
+      setAmount("");
+      setDateTo("");
+      setDateFrom("");
+      setCategory("");
     } catch (error) {
       console.log(error, "Error");
     }
@@ -123,7 +140,7 @@ export const AddRecord = () => {
                     placeholder="₮ 000.00"
                   ></input>
                 </div>
-                <AddRecordCategory />
+                <AddRecordCategory func={setCategory} category={category} />
                 <div className="w-full h-fit grid grid-cols-2 gap-3">
                   <div className="w-full h-fit flex flex-col items-start gap-1">
                     <label className="w-fit h-fit text-black text-[16px]">
@@ -154,9 +171,7 @@ export const AddRecord = () => {
                 </div>
                 <div
                   onClick={() => {
-                    console.log(type);
                     postRecord(type, amount, category, dateFrom, dateTo);
-                    setIsShown(false);
                   }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
                     type === "expense" ? "#0166FF" : "#16A34A"

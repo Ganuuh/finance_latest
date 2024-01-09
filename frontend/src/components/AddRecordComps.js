@@ -23,7 +23,7 @@ export const AddRecordsRight = () => {
   );
 };
 
-export const AddRecordCategory = () => {
+export const AddRecordCategory = (props) => {
   const {
     setCategory,
     category,
@@ -44,13 +44,13 @@ export const AddRecordCategory = () => {
     setAddCategory(true);
     setCategory(false);
   };
-
+  const setChosenCategory = props.func;
   return (
     <div className="w-full h-fit flex flex-col items-center">
       <label className="w-full h-fit text-[16px] text-black ">Category</label>
       <div className="w-full h-[48px] border-[1px] rounded-md bg-[#F9FAFB] flex items-center justify-around px-3 relative">
-        <p className="w-full h-fit text-[14px] text-[#94A3B8]">
-          Find or choose category
+        <p className="w-full h-fit text-[14px] text-[#000]">
+          {props.category === "" ? "Find or choose category" : props.category}
         </p>
         <div
           className={`w-[24px] h-[24px] flex items-center justify-center cursor-pointer rotate-${
@@ -81,6 +81,9 @@ export const AddRecordCategory = () => {
             {records.map((each, index) => {
               return (
                 <div
+                  onClick={() => {
+                    setChosenCategory(each.name);
+                  }}
                   key={index}
                   className="w-full h-fit flex items-center gap-3"
                 >

@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
 const { Category } = require("./model/category.model");
+const { Record } = require("./model/record.model");
 
 const app = express();
 app.use(cors());
@@ -74,13 +75,7 @@ app.post("/add-record", async (req, res) => {
 
     const { type, amount, category, dateTo, dateFrom } = req.body;
 
-    const filePath = "src/data/records.json";
-
-    const rawFile = await fs.readFile(filePath, "utf8");
-
-    const records = JSON.parse(rawFile);
-
-    records.push({
+    Record.create({
       type,
       amount,
       category,
@@ -88,8 +83,6 @@ app.post("/add-record", async (req, res) => {
       dateFrom,
       Email: email,
     });
-
-    await fs.writeFile(filePath, JSON.stringify(records));
 
     res.json({ message: "Record created" });
   } catch (error) {

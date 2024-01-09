@@ -4,7 +4,7 @@ import "./globals.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/common";
 import { MdHomeFilled } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
@@ -89,8 +89,12 @@ export default function RootLayout({ children }) {
   const [addCategory, setAddCategory] = useState(false);
   const [records, setRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
-  // const [myLink] = useSearchParams();
-  // console.log(myLink);
+  const [link, setLink] = useState(true);
+  const myLink = usePathname();
+
+  useEffect(() => {
+    myLink.includes("dashboard") ? setLink(true) : setLink(false);
+  }, [myLink]);
 
   const router = useRouter();
 
@@ -164,6 +168,7 @@ export default function RootLayout({ children }) {
           colorChoice,
           categoryAdded,
           setCategoryAdded,
+          link,
         }}
       >
         <body className={inter.className}>

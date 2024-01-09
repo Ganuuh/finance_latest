@@ -89,8 +89,8 @@ export default function RootLayout({ children }) {
   const [addCategory, setAddCategory] = useState(false);
   const [records, setRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
-  const [myLink] = useSearchParams();
-  console.log(myLink);
+  // const [myLink] = useSearchParams();
+  // console.log(myLink);
 
   const router = useRouter();
 

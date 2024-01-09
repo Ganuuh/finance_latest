@@ -3,11 +3,14 @@ const fs = require("fs").promises;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+const { connectToDatabase } = require("./database");
+const { User } = require("./model/user.model");
 
 const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+connectToDatabase();
 //Log-in function
 app.post("/log-in", async (req, res) => {
   const { password, email } = req.body;
@@ -42,27 +45,15 @@ app.post("/log-in", async (req, res) => {
 // Sign-up function
 app.post("/sign-up", async (req, res) => {
   const { email, password } = req.body;
-
-  const filePath = "src/data/users.json";
-
-  const usersRaw = await fs.readFile(filePath, "utf8");
-
-  const users = JSON.parse(usersRaw);
-
-  const user = users.find((user) => {
-    user.Email === email;
+  await User.create({
+    Name: "Ganuu",
+    Email: email,
+    Password: password,
+    createdAt: new Date(),
+    updatedAt: new Date(),
   });
 
-  if (user) {
-    return res.status(409).json({ message: "User already exists" });
-  }
-
-  users.push({ Email: email, Password: password });
-
-  await fs.writeFile(filePath, JSON.stringify(users));
-
   res.json({ message: "User created" });
-  console.log("Success");
 });
 
 //Add record function

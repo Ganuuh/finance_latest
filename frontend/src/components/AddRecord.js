@@ -3,12 +3,12 @@
 import { useAuth } from "@/app/layout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
 import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown } = useAuth();
+  const { isShown, setIsShown, newIcons } = useAuth();
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [dateFrom, setDateFrom] = useState("");
@@ -16,6 +16,7 @@ export const AddRecord = () => {
   const [type, setType] = useState("income");
 
   const postRecord = async (type, amount, category, dateFrom, dateTo) => {
+    console.log(type, "TYYYYPE");
     try {
       const { data } = await api.post(
         "/add-record",
@@ -84,11 +85,10 @@ export const AddRecord = () => {
               <div className="w-full h-full flex  rounded-full bg-[#F3F4F6]">
                 <p
                   onClick={() => {
-                    setType("income");
-                    console.log(type);
+                    setType("expense");
                   }}
                   className={`w-[50%] h-full flex items-center p-4 justify-center rounded-full cursor-pointer  ${
-                    type === "income"
+                    type === "expense"
                       ? "text-[#ffffff]  bg-[#0166FF]"
                       : "text-[#000000] bg-[#F3F4F6]"
                   }`}
@@ -97,11 +97,10 @@ export const AddRecord = () => {
                 </p>
                 <p
                   onClick={() => {
-                    setType("expense");
-                    console.log(type);
+                    setType("income");
                   }}
                   className={`w-[50%] h-full flex items-center p-4  justify-center rounded-full cursor-pointer  ${
-                    type === "income"
+                    type === "expense"
                       ? "text-[#000000] bg-[#F3F4F6]"
                       : "text-[#ffffff]  bg-[#16A34A]"
                   }`}
@@ -120,7 +119,7 @@ export const AddRecord = () => {
                       setAmount(e.target.value);
                     }}
                     type="number"
-                    className="bg-transparent"
+                    className="bg-transparent text-[#000]"
                     placeholder="₮ 000.00"
                   ></input>
                 </div>
@@ -160,7 +159,7 @@ export const AddRecord = () => {
                     setIsShown(false);
                   }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
-                    type === "income" ? "#0166FF" : "#16A34A"
+                    type === "expense" ? "#0166FF" : "#16A34A"
                   }] text-[#F9FAFB] text-[16px] rounded-full `}
                 >
                   Add Record

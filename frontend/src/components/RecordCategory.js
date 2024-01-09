@@ -1,6 +1,8 @@
+"use client";
+import { useAuth } from "@/app/layout";
 import { EachCategory } from "./EachCategory";
-import { data } from "./data";
 export const RecordCategory = () => {
+  const { records } = useAuth();
   return (
     <div className="w-full h-fit flex flex-col gap-4">
       <div className="w-full h-fit flex justify-between items-center">
@@ -10,11 +12,18 @@ export const RecordCategory = () => {
         <p className="w-fit h-fit text-[#1F2937] text-[16px]">Clear</p>
       </div>
       <div className="w-full h-fit flex flex-col gap-1">
-        {data.map((each, index) => {
-          return <EachCategory key={index} title={each} />;
+        {records.map((each, index) => {
+          return (
+            <EachCategory
+              key={index}
+              title={each.name}
+              color={each.color}
+              icon={each.icon}
+            />
+          );
         })}
-        <div className="w-full h-fit px-3 py-2 flex gap-2">
-          <img className="w-5 h-5" src="/plus.png" />
+        <div className="w-full h-fit px-3 py-2 flex gap-2 items-center">
+          <p className="text-[20px] text-[#000]">+</p>
           <p className="w-fit h-fit text-[16px] text-[#1F2937]">Add Category</p>
         </div>
       </div>

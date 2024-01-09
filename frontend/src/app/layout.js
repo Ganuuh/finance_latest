@@ -4,7 +4,7 @@ import "./globals.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createContext, useContext, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { api } from "@/common";
 import { MdHomeFilled } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
@@ -88,6 +88,9 @@ export default function RootLayout({ children }) {
   const [category, setCategory] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
   const [records, setRecords] = useState([]);
+  const [categoryAdded, setCategoryAdded] = useState(false);
+  const [myLink] = useSearchParams();
+  console.log(myLink);
 
   const router = useRouter();
 
@@ -117,18 +120,13 @@ export default function RootLayout({ children }) {
 
   const getCategory = async () => {
     try {
-      const { data } = await api.get(
-        "/get-categories",
-        {},
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
-
-      const { records } = data;
-      setRecords(records);
+      const res = await api.get("/get-categories", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+      const { filteredCategories } = res.data;
+      setRecords(filteredCategories);
     } catch (error) {
       console.log(error);
     }
@@ -164,6 +162,8 @@ export default function RootLayout({ children }) {
           records,
           newIcons,
           colorChoice,
+          categoryAdded,
+          setCategoryAdded,
         }}
       >
         <body className={inter.className}>

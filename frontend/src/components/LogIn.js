@@ -12,6 +12,11 @@ export const LogIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+
+  if (localStorage.getItem("token")) {
+    router.push("/dashboard");
+  }
+
   const isPasswordValid = () => {
     if (password === "") {
       alert("Password must not be empty");
@@ -19,11 +24,13 @@ export const LogIn = () => {
     }
     signIn(email, password);
   };
+
   const isValid = () => {
     const includes =
       email.includes("@gmail.com") || email.includes("@yahoo.com");
     includes ? isPasswordValid() : alert("Not Valid Email");
   };
+
   const clickHandler = () => {
     setShown((prev) => !prev);
   };

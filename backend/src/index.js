@@ -32,7 +32,7 @@ app.post("/log-in", async (req, res) => {
     });
   }
 
-  const token = jwt.sign({ email }, "secret-key", { expiresIn: "1h" });
+  const token = jwt.sign({ email }, "secret-key", { expiresIn: "2h" });
 
   res.json({
     token,
@@ -172,7 +172,7 @@ app.post("/categories", async (req, res) => {
     await fs.writeFile(filePath, JSON.stringify(categories));
 
     res.json({
-      message: "Category added",
+      message: "Category added succesfully",
     });
   } catch (error) {
     res.status(409).json({
@@ -186,7 +186,7 @@ app.get("/get-categories", async (req, res) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
-    res.status(401).json({
+    return res.status(401).json({
       message: "Token not found , Unauthorized",
     });
   }
@@ -215,6 +215,7 @@ app.get("/get-categories", async (req, res) => {
     });
   }
 });
+
 const port = 8008;
 
 app.listen(port, () => {

@@ -31,10 +31,14 @@ export const AddRecordCategory = () => {
     setAddCategory,
     records,
     getCategory,
+    newIcons,
+    categoryAdded,
   } = useAuth();
+
   useEffect(() => {
     getCategory();
-  }, []);
+  }, [categoryAdded]);
+
   const clickHandler = () => {
     setIsShown(false);
     setAddCategory(true);
@@ -73,14 +77,23 @@ export const AddRecordCategory = () => {
             <p className="w-fit h-fit text-[#000] text-[24px]">+</p>
             <p className="w-fit h-fit text-[16px] text-[#000]">Category</p>
           </div>
-          <div className="w-full h-fit flex items-center py-4">
-            {/* {records.map((each, index) => {
+          <div className="w-full h-fit max-h-[200px] overflow-y-scroll flex flex-col items-center py-4 gap-4">
+            {records.map((each, index) => {
               return (
-                <p key={index} className="text-[#000] text-[14px]">
-                  {each}
-                </p>
+                <div
+                  key={index}
+                  className="w-full h-fit flex items-center gap-3"
+                >
+                  <div
+                    style={{ color: each.color }}
+                    className="text-[#000] text-[14px]"
+                  >
+                    {newIcons[each.icon]}
+                  </div>
+                  <p className="text-[14px] text-[#000]">{each.name}</p>
+                </div>
               );
-            })} */}
+            })}
           </div>
         </div>
       </div>

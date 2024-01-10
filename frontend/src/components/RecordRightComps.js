@@ -44,14 +44,24 @@ export const RecordRightCategory = (props) => {
       <div className="w-fit h-fit flex items-center gap-4">
         <div className="w-5 aspect-square border-[2px] rounded-md"></div>
         <div className="w-10 h-10 flex justify-center items-center bg-[#0166FF] rounded-full">
-          <img src="/House.png" />
+          <div
+            className="w-full h-full bg-transparent flex items-center justify-center"
+            style={{ color: props.color }}
+          >
+            {props.icon}
+          </div>
         </div>
         <div className="w-fit h-full flex flex-col items-start justify-between">
           <p className="text-4 w-fit h-fit text-black">{props.title}</p>
           <p className="text-3 w-fit h-fit text-[#6B7280]">14:00</p>
         </div>
       </div>
-      <p className="w-fit text-[#23E01F] text-[16px] h-fit">- 1000₮</p>
+      <p
+        className="w-fit text-[16px] h-fit"
+        style={{ color: props.type === "expense" ? "red" : "green" }}
+      >
+        {props.type === "expense" ? `- ${props.amount}₮` : `${props.amount}₮`}
+      </p>
     </div>
   );
 };

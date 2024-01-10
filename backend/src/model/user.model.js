@@ -1,9 +1,9 @@
 const { default: mongoose } = require("mongoose");
 
 const User = mongoose.model("User", {
-  Name: String,
-  Email: String,
-  Password: String,
+  name: String,
+  email: String,
+  password: String,
   createdAt: Date,
   updatedAt: Date,
 });

@@ -29,12 +29,11 @@ export const AddRecordCategory = (props) => {
     category,
     setIsShown,
     setAddCategory,
-    records,
+    categories,
     getCategory,
     newIcons,
     categoryAdded,
   } = useAuth();
-
   useEffect(() => {
     getCategory();
   }, [categoryAdded]);
@@ -44,7 +43,9 @@ export const AddRecordCategory = (props) => {
     setAddCategory(true);
     setCategory(false);
   };
-  const setChosenCategory = props.func;
+  const setChosenCategory = props.setCategory;
+  const setIcon = props.setIcon;
+  const setColor = props.setColor;
   return (
     <div className="w-full h-fit flex flex-col items-center">
       <label className="w-full h-fit text-[16px] text-black ">Category</label>
@@ -78,25 +79,32 @@ export const AddRecordCategory = (props) => {
             <p className="w-fit h-fit text-[16px] text-[#000]">Category</p>
           </div>
           <div className="w-full h-fit max-h-[200px] overflow-y-scroll flex flex-col items-center py-4 gap-4">
-            {records.map((each, index) => {
-              return (
-                <div
-                  onClick={() => {
-                    setChosenCategory(each.name);
-                  }}
-                  key={index}
-                  className="w-full h-fit flex items-center gap-3"
-                >
+            {categories.length === 0 ? (
+              <p className="text-[16px] text-[#000]">No Category , Bitch ass</p>
+            ) : (
+              categories.map((each, index) => {
+                return (
                   <div
-                    style={{ color: each.color }}
-                    className="text-[#000] text-[14px]"
+                    onClick={() => {
+                      setChosenCategory(each.name);
+                      setColor(each.color);
+                      setIcon(`${each.icon}`);
+                      setCategory(false);
+                    }}
+                    key={index}
+                    className="w-full h-fit flex items-center gap-3"
                   >
-                    {newIcons[each.icon]}
+                    <div
+                      style={{ color: each.color }}
+                      className="text-[#000] text-[14px]"
+                    >
+                      {newIcons[each.icon]}
+                    </div>
+                    <p className="text-[14px] text-[#000]">{each.name}</p>
                   </div>
-                  <p className="text-[14px] text-[#000]">{each.name}</p>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
         </div>
       </div>

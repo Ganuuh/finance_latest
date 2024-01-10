@@ -2,7 +2,7 @@
 import { useAuth } from "@/app/layout";
 import { EachCategory } from "./EachCategory";
 export const RecordCategory = () => {
-  const { records } = useAuth();
+  const { categories } = useAuth();
   return (
     <div className="w-full h-fit flex flex-col gap-4">
       <div className="w-full h-fit flex justify-between items-center">
@@ -11,8 +11,8 @@ export const RecordCategory = () => {
         </p>
         <p className="w-fit h-fit text-[#1F2937] text-[16px]">Clear</p>
       </div>
-      <div className="w-full h-fit flex flex-col gap-1">
-        {records.map((each, index) => {
+      <div className="w-full h-fit max-h-[300px] overflow-scroll flex flex-col gap-1">
+        {categories.map((each, index) => {
           return (
             <EachCategory
               key={index}

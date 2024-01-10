@@ -4,7 +4,7 @@ import "./globals.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { createContext, useContext, useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { api } from "@/common";
 import { MdHomeFilled } from "react-icons/md";
 import { TiHome } from "react-icons/ti";
@@ -87,8 +87,10 @@ export default function RootLayout({ children }) {
   const [isShown, setIsShown] = useState(false);
   const [category, setCategory] = useState(false);
   const [addCategory, setAddCategory] = useState(false);
+  const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
+  const [recordAdded, setRecordAdded] = useState(false);
   const [link, setLink] = useState(true);
   const myLink = usePathname();
 
@@ -116,7 +118,7 @@ export default function RootLayout({ children }) {
       });
       const { token } = data;
       checkToken(token);
-      console.log(data.message);
+      toast.info(data.message);
     } catch (err) {
       toast.info(err);
     }
@@ -129,10 +131,24 @@ export default function RootLayout({ children }) {
           Authorization: localStorage.getItem("token"),
         },
       });
-      const { filteredCategories } = res.data;
-      setRecords(filteredCategories);
+
+      setCategories(res.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const getRecord = async () => {
+    try {
+      const res = await api.get("/records", {
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+      });
+
+      setRecords(res.data);
+    } catch (error) {
+      toast.info(error);
     }
   };
 
@@ -163,12 +179,16 @@ export default function RootLayout({ children }) {
           addCategory,
           setAddCategory,
           getCategory,
-          records,
+          getRecord,
+          categories,
           newIcons,
           colorChoice,
           categoryAdded,
           setCategoryAdded,
+          recordAdded,
+          setRecordAdded,
           link,
+          records,
         }}
       >
         <body className={inter.className}>

@@ -5,6 +5,8 @@ import { BigButton } from "./BigButton";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const LogIn = () => {
   const { signIn } = useAuth();
@@ -19,7 +21,7 @@ export const LogIn = () => {
 
   const isPasswordValid = () => {
     if (password === "") {
-      alert("Password must not be empty");
+      toast.info("Password must not be empty");
       return;
     }
     signIn(email, password);
@@ -28,7 +30,7 @@ export const LogIn = () => {
   const isValid = () => {
     const includes =
       email.includes("@gmail.com") || email.includes("@yahoo.com");
-    includes ? isPasswordValid() : alert("Not Valid Email");
+    includes ? isPasswordValid() : toast.info("Not valid email");
   };
 
   const clickHandler = () => {
@@ -36,6 +38,7 @@ export const LogIn = () => {
   };
   return (
     <div className="w-[50%] h-[50%] flex flex-col items-center gap-10">
+      <ToastContainer />
       <div className="w-fit flex flex-col gap-[14px] h-fit items-center justify-center">
         <Logo
           height="24px"

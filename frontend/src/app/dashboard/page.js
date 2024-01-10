@@ -27,7 +27,7 @@ export default function Home() {
       <AddRecord />
       <AddCategory />
       <NavBar />
-      <div className="w-screen h-fit bg-[#F3F4F6] flex flex-col mt-[70px] px-[120px] py-8 gap-6">
+      <div className="w-screen h-screen overflow-scroll bg-[#F3F4F6] flex flex-col mt-[70px] px-[120px] py-8 gap-6">
         <DashboardContainer>
           <DashboardHead />
           <DashboardMid />

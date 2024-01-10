@@ -15,7 +15,7 @@ export const NavBar = () => {
   };
 
   return (
-    <div className="w-screen h-fit py-4 px-[120px] flex items-center justify-between bg-[#FFFFFF] text-[#0F172A] fixed top-0 right-0 z-20">
+    <div className="w-screen h-fit py-4 px-[120px]  flex items-center justify-between bg-[#FFFFFF] text-[#0F172A] fixed top-0 right-0 z-20">
       <NavContainer>
         <div className="w-fit h-fit flex gap-6 items-center">
           <img src="/Vector.png" />

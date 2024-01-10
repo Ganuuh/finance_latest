@@ -17,27 +17,29 @@ connectToDatabase();
 app.post("/log-in", async (req, res) => {
   const { password, email } = req.body;
 
-  const filePath = "src/data/users.json";
-
-  const usersRaw = await fs.readFile(filePath, "utf8");
-
-  const users = JSON.parse(usersRaw);
-
-  const user = users.find((user) => user.Email === email);
+  const user = await User.findOne({ email: email, password: password });
 
   if (!user) {
-    res.json({
-      message: "Email is not registered",
+    return res.json({
+      message: "Sign up , user not found",
     });
   }
 
-  if (user.Password !== password) {
-    res.json({
-      message: "Password is incorrect",
-    });
-  }
+  const id = user._id;
 
-  const token = jwt.sign({ email }, "secret-key", { expiresIn: "2h" });
+  // if (user == []) {
+  //   res.json({
+  //     message: "Email is not registered",
+  //   });
+  // }
+
+  // if (user.password !== password) {
+  //   res.json({
+  //     message: "Password is incorrect",
+  //   });
+  // }
+
+  const token = jwt.sign({ id }, "secret-key", { expiresIn: "2h" });
 
   res.json({
     token,
@@ -46,11 +48,11 @@ app.post("/log-in", async (req, res) => {
 
 // Sign-up function
 app.post("/sign-up", async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
   await User.create({
-    Name: "Ganuu",
-    Email: email,
-    Password: password,
+    name,
+    email,
+    password,
     createdAt: new Date(),
     updatedAt: new Date(),
   });
@@ -71,17 +73,21 @@ app.post("/add-record", async (req, res) => {
   try {
     const payload = jwt.verify(authorization, "secret-key");
 
-    const { email } = payload;
+    const { id } = payload;
 
-    const { type, amount, category, dateTo, dateFrom } = req.body;
+    const { type, amount, category, dateTo, dateFrom, color, icon } = req.body;
 
     Record.create({
       type,
       amount,
-      category,
+      category: {
+        name: category,
+        color: color,
+        icon: icon,
+      },
       dateTo,
       dateFrom,
-      Email: email,
+      userId: id,
     });
 
     res.json({ message: "Record created" });
@@ -102,21 +108,11 @@ app.get("/records", async (req, res) => {
   try {
     const payload = jwt.verify(authorization, "secret-key");
 
-    const { email } = payload;
+    const { id } = payload;
 
-    const filePath = "src/data/records.json";
+    const record = await Record.find({ userId: id });
 
-    const rawFile = await fs.readFile(filePath, "utf8");
-
-    const records = JSON.parse(rawFile);
-
-    const filteredRecords = records.filter((each) => {
-      return each.Email === email;
-    });
-
-    res.json({
-      filteredRecords,
-    });
+    return res.json(record);
   } catch (error) {
     res.status(409).json({
       message: "Unauthorized in proccesing",
@@ -137,10 +133,15 @@ app.post("/categories", async (req, res) => {
   try {
     const { icon, color, name } = req.body;
 
+    const payload = jwt.verify(authorization, "secret-key");
+
+    const { id } = payload;
+
     Category.create({
       name,
       icon,
       color,
+      userId: id,
     });
     res.json({
       message: "Category added succesfully",
@@ -165,21 +166,11 @@ app.get("/get-categories", async (req, res) => {
   try {
     const payload = jwt.verify(authorization, "secret-key");
 
-    const { email } = payload;
+    const { id } = payload;
 
-    const filePath = "src/data/categories.json";
+    const categories = await Category.find({ userId: id });
 
-    const rawFile = await fs.readFile(filePath, "utf8");
-
-    const categories = JSON.parse(rawFile);
-
-    const filteredCategories = categories.filter((each) => {
-      return each.Email === email;
-    });
-
-    res.json({
-      filteredCategories,
-    });
+    return res.json(categories);
   } catch (error) {
     res.json({
       message: "Error occured in processing",

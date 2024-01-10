@@ -1,12 +1,12 @@
 const { default: mongoose } = require("mongoose");
 
 const Record = mongoose.model("records", {
-  category: String,
+  category: { name: String, icon: String, color: String },
   amount: String,
   type: String,
   dateFrom: Date,
   dateTo: Date,
-  Email: String,
+  userId: mongoose.Schema.ObjectId,
 });
 
 module.exports = {

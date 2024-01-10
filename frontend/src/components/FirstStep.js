@@ -21,10 +21,10 @@ export const FirstStep = () => {
       const { data } = await api.post("/sign-up", {
         password,
         email,
+        name,
       });
-      console.log(data);
     } catch (err) {
-      console.log(err, "Error");
+      toast.info(err);
     }
   };
   const isMathching = () => {
@@ -79,6 +79,7 @@ export const FirstStep = () => {
   };
   return (
     <div className="w-[50%] h-fit flex flex-col items-center gap-10">
+      <ToastContainer />
       <div
         className={`w-[25%] h-fit  fixed top-[37.5%] left-[62.5%] rounded-lg bg-white flex flex-col gap-4 p-5 ${
           errors.length > 1 ? "flex" : "hidden"

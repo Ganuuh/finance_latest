@@ -3,19 +3,29 @@
 import { useAuth } from "@/app/layout";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
 import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown, newIcons } = useAuth();
+  const { isShown, setIsShown, newIcons, setRecordAdded } = useAuth();
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
+  const [color, setColor] = useState("");
+  const [icon, setIcon] = useState(1);
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [type, setType] = useState("income");
 
-  const postRecord = async (type, amount, category, dateFrom, dateTo) => {
+  const postRecord = async (
+    type,
+    amount,
+    category,
+    dateFrom,
+    dateTo,
+    color,
+    icon
+  ) => {
     const datas = [amount, category, dateFrom, dateTo];
     let count = 0;
     datas.forEach((data) => {
@@ -37,6 +47,8 @@ export const AddRecord = () => {
           category,
           dateFrom,
           dateTo,
+          color,
+          icon,
         },
         {
           headers: {
@@ -60,6 +72,7 @@ export const AddRecord = () => {
       setDateTo("");
       setDateFrom("");
       setCategory("");
+      setRecordAdded((prev) => !prev);
     } catch (error) {
       console.log(error, "Error");
     }
@@ -140,7 +153,12 @@ export const AddRecord = () => {
                     placeholder="₮ 000.00"
                   ></input>
                 </div>
-                <AddRecordCategory func={setCategory} category={category} />
+                <AddRecordCategory
+                  setCategory={setCategory}
+                  setColor={setColor}
+                  setIcon={setIcon}
+                  category={category}
+                />
                 <div className="w-full h-fit grid grid-cols-2 gap-3">
                   <div className="w-full h-fit flex flex-col items-start gap-1">
                     <label className="w-fit h-fit text-black text-[16px]">
@@ -171,7 +189,15 @@ export const AddRecord = () => {
                 </div>
                 <div
                   onClick={() => {
-                    postRecord(type, amount, category, dateFrom, dateTo);
+                    postRecord(
+                      type,
+                      amount,
+                      category,
+                      dateFrom,
+                      dateTo,
+                      color,
+                      icon
+                    );
                   }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
                     type === "expense" ? "#0166FF" : "#16A34A"

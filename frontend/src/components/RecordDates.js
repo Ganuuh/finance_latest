@@ -13,15 +13,13 @@ export const RecordDay = (props) => {
     setIsloading(false);
   }, [recordAdded]);
   return (
-    <div className="w-full flex flex-col gap-2">
+    <>
+    {isLoading ?<Loading/> : <div className="w-full flex flex-col gap-2">
       <p className="w-full h-fit p-4 text-4 text-black font-medium ">
         {props.date}
       </p>
       <div className="w-full h-fit flex flex-col gap-3 max-h-[350px] overflow-y-scroll">
-        {isLoading ? (
-          <div></div>
-        ) : (
-          // <Loading />
+        {
           records.map((each, index) => {
             return (
               <RecordRightCategory
@@ -34,8 +32,10 @@ export const RecordDay = (props) => {
               />
             );
           })
-        )}
+        }
       </div>
-    </div>
+    </div> }
+   
+    </>
   );
 };

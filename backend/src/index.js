@@ -100,6 +100,8 @@ app.post("/add-record", async (req, res) => {
 app.get("/records", async (req, res) => {
   const { authorization } = req.headers;
 
+  console.log(req.query);
+
   if (!authorization) {
     return res.status(409).json({
       message: "Unauthorized",
@@ -136,6 +138,14 @@ app.post("/categories", async (req, res) => {
     const payload = jwt.verify(authorization, "secret-key");
 
     const { id } = payload;
+
+    const category = await Category.findOne({ name: name });
+
+    if (category) {
+      return res.status(401).json({
+        message: "Category already exists",
+      });
+    }
 
     Category.create({
       name,

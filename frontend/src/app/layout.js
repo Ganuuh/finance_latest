@@ -36,6 +36,7 @@ import { TbLemon } from "react-icons/tb";
 import { FaPeace } from "react-icons/fa";
 import { PiToiletPaperFill } from "react-icons/pi";
 import { FaPencilAlt } from "react-icons/fa";
+import { RecordDay } from "@/components/RecordDates";
 
 const newIcons = [
   <MdHomeFilled />,
@@ -89,9 +90,12 @@ export default function RootLayout({ children }) {
   const [addCategory, setAddCategory] = useState(false);
   const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
+  const [filteredRecords, setFilteredRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
   const [recordAdded, setRecordAdded] = useState(false);
   const [link, setLink] = useState(true);
+  const [recordFilter, setRecordFilter] = useState("All");
+  const [categoryFilter, setCategoryFilter] = useState("All");
   const myLink = usePathname();
 
   useEffect(() => {
@@ -144,9 +148,13 @@ export default function RootLayout({ children }) {
         headers: {
           Authorization: localStorage.getItem("token"),
         },
+        params: {
+          days: 7,
+        },
       });
 
       setRecords(res.data);
+      setFilteredRecords(res.data);
     } catch (error) {
       toast.info(error);
     }
@@ -164,6 +172,23 @@ export default function RootLayout({ children }) {
     setIsReady(true);
   }, []);
 
+  useEffect(() => {
+    getRecord();
+  }, [recordAdded]);
+
+  useEffect(() => {
+    const a = records
+      .filter((record) => {
+        if (recordFilter === "All") return true;
+        return record.type === recordFilter;
+      })
+      .filter((record) => {
+        if (categoryFilter === "All") return true;
+        return record.category.name === categoryFilter;
+      });
+
+    setFilteredRecords(a);
+  }, [recordFilter, categoryFilter]);
   return (
     <html lang="en">
       <Context.Provider
@@ -187,8 +212,13 @@ export default function RootLayout({ children }) {
           setCategoryAdded,
           recordAdded,
           setRecordAdded,
-          link,
+          recordFilter,
           records,
+          setRecordFilter,
+          categoryFilter,
+          setCategoryFilter,
+          link,
+          filteredRecords,
         }}
       >
         <body className={inter.className}>

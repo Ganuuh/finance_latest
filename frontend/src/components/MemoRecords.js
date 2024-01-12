@@ -6,12 +6,12 @@ import { LastRecord } from "./LastRecord";
 import { RecordRightCategory } from "./RecordRightComps";
 
 export const DashBoardRecordMemo = () => {
-  const { records, newIcons } = useAuth();
+  const { filteredRecords, newIcons, recordAdded } = useAuth();
 
   const list = useMemo(() => {
     return (
       <>
-        {records.map((each, index) => {
+        {filteredRecords.map((each, index) => {
           return (
             <LastRecord
               key={index}
@@ -25,18 +25,21 @@ export const DashBoardRecordMemo = () => {
         })}
       </>
     );
-  }, [records]);
+  }, [filteredRecords, recordAdded]);
 
   return list;
 };
 
-export const RecordRecordMemo = () => {
-  const { records, newIcons } = useAuth();
+export const RecordRecordMemoToday = () => {
+  const { newIcons, filteredRecords, recordAdded } = useAuth();
 
   const list = useMemo(() => {
     return (
       <div className="w-full h-fit flex flex-col gap-3 max-h-[350px] overflow-y-scroll">
-        {records.map((each, index) => {
+        <p className="w-fit h-fit text-[16px] text-[#000] font-semibold">
+          Today
+        </p>
+        {filteredRecords.map((each, index) => {
           return (
             <RecordRightCategory
               key={index}
@@ -50,6 +53,33 @@ export const RecordRecordMemo = () => {
         })}
       </div>
     );
-  }, [records]);
+  }, [filteredRecords, recordAdded]);
+  return list;
+};
+
+export const RecordRecordMemoYesterday = () => {
+  const { filteredRecords, newIcons, recordAdded } = useAuth();
+
+  const list = useMemo(() => {
+    return (
+      <div className="w-full h-fit flex flex-col gap-3 max-h-[350px] overflow-y-scroll">
+        <p className="w-fit h-fit text-[16px] text-[#000] font-semibold">
+          Yesterday
+        </p>
+        {filteredRecords.map((each, index) => {
+          return (
+            <RecordRightCategory
+              key={index}
+              icon={newIcons[each.category.icon]}
+              color={each.category.color}
+              title={each.category.name}
+              amount={each.amount}
+              type={each.type}
+            />
+          );
+        })}
+      </div>
+    );
+  }, [filteredRecords, recordAdded]);
   return list;
 };

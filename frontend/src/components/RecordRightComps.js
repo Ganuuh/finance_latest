@@ -43,13 +43,11 @@ export const RecordRightCategory = (props) => {
     <div className="w-full h-fit px-6 py-3 flex items-center justify-between bg-[#FFFFFF] rounded-md">
       <div className="w-fit h-fit flex items-center gap-4">
         <div className="w-5 aspect-square border-[2px] rounded-md"></div>
-        <div className="w-10 h-10 flex justify-center items-center bg-[#0166FF] rounded-full">
-          <div
-            className="w-full h-full bg-transparent flex items-center justify-center"
-            style={{ color: props.color }}
-          >
-            {props.icon}
-          </div>
+        <div
+          className="w-10 h-10 flex justify-center items-center bg-[#fff] rounded-full"
+          style={{ backgroundColor: props.color }}
+        >
+          {props.icon}
         </div>
         <div className="w-fit h-full flex flex-col items-start justify-between">
           <p className="text-4 w-fit h-fit text-black">{props.title}</p>

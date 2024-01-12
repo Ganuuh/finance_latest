@@ -45,7 +45,7 @@ export const AddCategory = () => {
       setAddCategory(false);
       setCategoryAdded((prev) => !prev);
     } catch (error) {
-      notification(error);
+      notification(error.response.data.message);
     }
   };
 

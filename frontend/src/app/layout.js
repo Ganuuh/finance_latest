@@ -96,6 +96,8 @@ export default function RootLayout({ children }) {
   const [link, setLink] = useState(true);
   const [recordFilter, setRecordFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [totalIncome, setTotalIncome] = useState(1000);
+  const [totalExpense, setTotalExpense] = useState(-1000);
   const myLink = usePathname();
 
   useEffect(() => {
@@ -154,6 +156,11 @@ export default function RootLayout({ children }) {
       });
 
       setRecords(res.data);
+
+      records.forEach((record) => {
+        console.log(record.amount);
+      });
+
       setFilteredRecords(res.data);
     } catch (error) {
       toast.info(error);
@@ -219,6 +226,8 @@ export default function RootLayout({ children }) {
           setCategoryFilter,
           link,
           filteredRecords,
+          totalExpense,
+          totalIncome,
         }}
       >
         <body className={inter.className}>

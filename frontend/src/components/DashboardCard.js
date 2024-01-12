@@ -8,7 +8,10 @@ export const DashboardCard = (props) => {
         </p>
       </div>
       <div className="h-fit w-full flex flex-col px-6 py-5">
-        <p className="w-full h-fit text-[36px] font-semibold text-black">
+        <p
+          className="w-full h-fit text-[36px] font-semibold text-black"
+          style={{ color: props.total < 0 ? "red" : "green" }}
+        >
           {props.total}₮
         </p>
         <p className="w-full h-fit text-[18px] text-[#64748B] leading-7">

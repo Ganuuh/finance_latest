@@ -39,18 +39,26 @@ export const RecordRecordMemoToday = () => {
         <p className="w-fit h-fit text-[16px] text-[#000] font-semibold">
           Today
         </p>
-        {filteredRecords.map((each, index) => {
-          return (
-            <RecordRightCategory
-              key={index}
-              icon={newIcons[each.category.icon]}
-              color={each.category.color}
-              title={each.category.name}
-              amount={each.amount}
-              type={each.type}
-            />
-          );
-        })}
+        {filteredRecords.length === 0 ? (
+          <div className="w-full h-[250px] flex justify-center items-center">
+            <p className="text-[20px] text-[#000] font-semibold">
+              Sorry, No records found in the filter.
+            </p>
+          </div>
+        ) : (
+          filteredRecords.map((each, index) => {
+            return (
+              <RecordRightCategory
+                key={index}
+                icon={newIcons[each.category.icon]}
+                color={each.category.color}
+                title={each.category.name}
+                amount={each.amount}
+                type={each.type}
+              />
+            );
+          })
+        )}
       </div>
     );
   }, [filteredRecords, recordAdded]);
@@ -66,18 +74,26 @@ export const RecordRecordMemoYesterday = () => {
         <p className="w-fit h-fit text-[16px] text-[#000] font-semibold">
           Yesterday
         </p>
-        {filteredRecords.map((each, index) => {
-          return (
-            <RecordRightCategory
-              key={index}
-              icon={newIcons[each.category.icon]}
-              color={each.category.color}
-              title={each.category.name}
-              amount={each.amount}
-              type={each.type}
-            />
-          );
-        })}
+        {filteredRecords.length === 0 ? (
+          <div className="w-full h-[250px] flex justify-center items-center">
+            <p className="text-[20px] text-[#000] font-semibold">
+              Sorry, No records found in the filter.
+            </p>
+          </div>
+        ) : (
+          filteredRecords.map((each, index) => {
+            return (
+              <RecordRightCategory
+                key={index}
+                icon={newIcons[each.category.icon]}
+                color={each.category.color}
+                title={each.category.name}
+                amount={each.amount}
+                type={each.type}
+              />
+            );
+          })
+        )}
       </div>
     );
   }, [filteredRecords, recordAdded]);

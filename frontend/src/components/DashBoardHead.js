@@ -1,6 +1,9 @@
+"use client";
+import { useAuth } from "@/app/layout";
 import { DashboardCard } from "./DashboardCard";
 
 export const DashboardHead = () => {
+  const { totalIncome, totalExpense } = useAuth();
   return (
     <div className="w-full h-fit  grid grid-cols-3 gap-5">
       <div className="h-full rounded-2xl w-full  overflow-hidden">
@@ -8,13 +11,13 @@ export const DashboardHead = () => {
       </div>
       <DashboardCard
         title="Your Income"
-        total="1,200,000"
+        total={totalIncome}
         percentage="32"
         color="#84CC16"
       />
       <DashboardCard
         title="Total expenses"
-        total="1,200,000"
+        total={totalExpense}
         percentage="-32"
         color="#0166FF"
       />

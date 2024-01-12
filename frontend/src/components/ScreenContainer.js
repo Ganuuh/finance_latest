@@ -16,6 +16,6 @@ export const DashboardContainer = ({ children }) => {
 
 export const RecordsContainer = ({ children }) => {
   return (
-    <div className="w-[1200px] h-fit flex items-start gap-9">{children}</div>
+    <div className="w-[1200px] h-screen flex items-start gap-9">{children}</div>
   );
 };

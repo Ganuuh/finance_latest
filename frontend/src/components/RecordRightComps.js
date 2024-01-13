@@ -40,7 +40,7 @@ export const RecordRightFilter = () => {
   );
 };
 export const RecordRightCategory = (props) => {
-  const { setDeleteBanner, setRecordId, deletingRecordId } = useAuth();
+  const { setDeleteBannerRecord, setRecordId } = useAuth();
   return (
     <div className="w-full h-fit px-6 py-3 flex items-center justify-between bg-[#FFFFFF] rounded-md">
       <div className="w-fit h-fit flex items-center gap-4">
@@ -48,7 +48,7 @@ export const RecordRightCategory = (props) => {
           className="w-4 aspect-square  rounded-md cursor-pointer"
           onClick={() => {
             setRecordId(props.id);
-            setDeleteBanner(true);
+            setDeleteBannerRecord(true);
           }}
         >
           <img className="w-full h-full" src="/trashcan.png" />

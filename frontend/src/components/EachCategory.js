@@ -3,7 +3,13 @@
 import { useAuth } from "@/app/layout";
 
 export const EachCategory = (props) => {
-  const { newIcons, setCategoryFilter, categoryFilter } = useAuth();
+  const {
+    newIcons,
+    setCategoryFilter,
+    categoryFilter,
+    setDeleteBannerCategory,
+    setCategoryId,
+  } = useAuth();
   return (
     <div className="w-full h-fit flex items-center justify-between">
       <div className="w-fit h-fit flex gap-[6px] px-3 py-1 items-center">
@@ -28,7 +34,15 @@ export const EachCategory = (props) => {
         </div>
         <p className="w-fit h-fit text-[#1F2937] text-[16px]">{props.title}</p>
       </div>
-      <img className="w-5 h-5" src="/arrow.png" />
+      <div
+        className="w-5 h-5"
+        onClick={() => {
+          setCategoryId(props.id);
+          setDeleteBannerCategory(true);
+        }}
+      >
+        <img className="w-5 h-5" src="/trashcan.png" />
+      </div>
     </div>
   );
 };

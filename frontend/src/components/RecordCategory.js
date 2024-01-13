@@ -23,6 +23,7 @@ export const RecordCategory = () => {
           return (
             <EachCategory
               key={index}
+              id={each._id}
               title={each.name}
               color={each.color}
               icon={each.icon}

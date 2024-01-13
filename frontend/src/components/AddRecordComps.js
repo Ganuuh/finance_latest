@@ -34,8 +34,8 @@ export const AddRecordCategory = (props) => {
     newIcons,
     categoryAdded,
   } = useAuth();
+
   useEffect(() => {
-    setIsShown(true);
     getCategory();
   }, [categoryAdded]);
 
@@ -89,7 +89,7 @@ export const AddRecordCategory = (props) => {
                     onClick={() => {
                       setChosenCategory(each.name);
                       setColor(each.color);
-                      setIcon(`${each.icon}`);
+                      setIcon(each.icon);
                       setCategory(false);
                     }}
                     key={index}

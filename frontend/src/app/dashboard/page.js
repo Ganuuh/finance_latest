@@ -9,7 +9,11 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AddRecord } from "@/components/AddRecord";
 import { AddCategory } from "@/components/AddCategory";
-import { DeleteBanner } from "@/components/DeleteBanner";
+import {
+  DeleteBanner,
+  DeleteBannerCategory,
+  DeleteBannerRecord,
+} from "@/components/DeleteBanner";
 
 export default function Home() {
   const { isReady, isLoggedIn, records, setTotalIncome, setTotalExpense } =
@@ -38,7 +42,8 @@ export default function Home() {
 
   return (
     <>
-      <DeleteBanner />
+      <DeleteBannerRecord />
+      <DeleteBannerCategory />
       <AddRecord />
       <AddCategory />
       <NavBar />

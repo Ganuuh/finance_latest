@@ -9,10 +9,14 @@ import { useAuth } from "../layout";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { get } from "https";
-import { DeleteBanner } from "@/components/DeleteBanner";
+import {
+  DeleteBanner,
+  DeleteBannerCategory,
+  DeleteBannerRecord,
+} from "@/components/DeleteBanner";
 
 export default function Home() {
-  const { isReady, isLoggedIn, getRecord, recordAdded } = useAuth();
+  const { isReady, isLoggedIn } = useAuth();
 
   const router = useRouter();
   useEffect(() => {
@@ -25,7 +29,9 @@ export default function Home() {
 
   return (
     <div className="w-sreen h-fit bg-[#F3F4F6]">
-      <DeleteBanner />
+      <DeleteBannerRecord />
+      <DeleteBannerCategory />
+
       <AddRecord />
       <AddCategory />
       <NavBar />

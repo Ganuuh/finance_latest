@@ -97,8 +97,10 @@ export default function RootLayout({ children }) {
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
-  const [deleteBanner, setDeleteBanner] = useState(false);
+  const [deleteBannerRecord, setDeleteBannerRecord] = useState(false);
+  const [deleteBannerCategory, setDeleteBannerCategory] = useState(false);
   const [deletingRecordId, setRecordId] = useState("");
+  const [deletingCategoryId, setCategoryId] = useState("");
   const myLink = usePathname();
 
   useEffect(() => {
@@ -197,6 +199,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <Context.Provider
         value={{
+          checkToken,
           setIsLoggedIn,
           isLoggedIn,
           signIn,
@@ -227,10 +230,14 @@ export default function RootLayout({ children }) {
           totalIncome,
           setTotalExpense,
           setTotalIncome,
-          deleteBanner,
-          setDeleteBanner,
+          deleteBannerRecord,
+          setDeleteBannerRecord,
           deletingRecordId,
           setRecordId,
+          deletingCategoryId,
+          setCategoryId,
+          deleteBannerCategory,
+          setDeleteBannerCategory,
         }}
       >
         <body className={inter.className}>

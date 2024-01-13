@@ -5,8 +5,12 @@ import { BigButton } from "./BigButton";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertText } from "./AlertText";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { api } from "@/common";
+import { useAuth } from "@/app/layout";
+
 export const FirstStep = () => {
   const [isShown, setShown] = useState(true);
   const [name, setName] = useState("");
@@ -16,6 +20,8 @@ export const FirstStep = () => {
   const [isStrong, setIsStrong] = useState(["Must contain"]);
   const [errors, setError] = useState([""]);
   const router = useRouter();
+
+  const { checkToken } = useAuth();
   const sendData = async (password, email, name) => {
     try {
       const { data } = await api.post("/sign-up", {
@@ -23,6 +29,10 @@ export const FirstStep = () => {
         email,
         name,
       });
+
+      const { token } = data;
+
+      checkToken(token);
     } catch (err) {
       toast.info(err);
     }

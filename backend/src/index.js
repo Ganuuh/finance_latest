@@ -18,7 +18,7 @@ connectToDatabase();
 app.post("/log-in", async (req, res) => {
   const { password, email } = req.body;
 
-  const user = await User.findOne({ email: email, password: password });
+  const user = await User.findOne({ email: email });
 
   if (!user) {
     return res.json({
@@ -26,19 +26,13 @@ app.post("/log-in", async (req, res) => {
     });
   }
 
+  if (user.password !== password) {
+    return res.json({
+      message: "Wrong password",
+    });
+  }
+
   const id = user._id;
-
-  // if (user == []) {
-  //   res.json({
-  //     message: "Email is not registered",
-  //   });
-  // }
-
-  // if (user.password !== password) {
-  //   res.json({
-  //     message: "Password is incorrect",
-  //   });
-  // }
 
   const token = jwt.sign({ id }, "secret-key", { expiresIn: "2h" });
 
@@ -58,7 +52,15 @@ app.post("/sign-up", async (req, res) => {
     updatedAt: new Date(),
   });
 
-  res.json({ message: "User created" });
+  const user = await User.findOne({ email: email, password: password });
+
+  const id = user._id;
+
+  const token = jwt.sign({ id }, "secret-key", { expiresIn: "2h" });
+
+  res.json({
+    token,
+  });
 });
 
 //Add record function
@@ -201,6 +203,22 @@ app.get("/get-categories", async (req, res) => {
   } catch (error) {
     res.json({
       message: "Error occured in processing",
+    });
+  }
+});
+
+app.post("/delete-category", async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    await Category.deleteOne({ _id: id });
+
+    res.json({
+      message: "Category deleted",
+    });
+  } catch (error) {
+    return res.status(401).json({
+      message: "Error occured",
     });
   }
 });

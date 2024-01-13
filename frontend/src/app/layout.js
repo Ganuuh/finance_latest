@@ -36,7 +36,6 @@ import { TbLemon } from "react-icons/tb";
 import { FaPeace } from "react-icons/fa";
 import { PiToiletPaperFill } from "react-icons/pi";
 import { FaPencilAlt } from "react-icons/fa";
-import { RecordDay } from "@/components/RecordDates";
 
 const newIcons = [
   <MdHomeFilled />,
@@ -96,8 +95,10 @@ export default function RootLayout({ children }) {
   const [link, setLink] = useState(true);
   const [recordFilter, setRecordFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
-  const [totalIncome, setTotalIncome] = useState(1000);
-  const [totalExpense, setTotalExpense] = useState(-1000);
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [deleteBanner, setDeleteBanner] = useState(false);
+  const [deletingRecordId, setRecordId] = useState("");
   const myLink = usePathname();
 
   useEffect(() => {
@@ -156,10 +157,6 @@ export default function RootLayout({ children }) {
       });
 
       setRecords(res.data);
-
-      records.forEach((record) => {
-        console.log(record.amount);
-      });
 
       setFilteredRecords(res.data);
     } catch (error) {
@@ -228,6 +225,12 @@ export default function RootLayout({ children }) {
           filteredRecords,
           totalExpense,
           totalIncome,
+          setTotalExpense,
+          setTotalIncome,
+          deleteBanner,
+          setDeleteBanner,
+          deletingRecordId,
+          setRecordId,
         }}
       >
         <body className={inter.className}>

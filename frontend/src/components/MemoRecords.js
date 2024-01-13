@@ -50,6 +50,7 @@ export const RecordRecordMemoToday = () => {
             return (
               <RecordRightCategory
                 key={index}
+                id={each._id}
                 icon={newIcons[each.category.icon]}
                 color={each.category.color}
                 title={each.category.name}

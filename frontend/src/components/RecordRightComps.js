@@ -1,4 +1,5 @@
 "use client";
+import { useAuth } from "@/app/layout";
 import { useState } from "react";
 
 export const RecordRightFilter = () => {
@@ -39,10 +40,19 @@ export const RecordRightFilter = () => {
   );
 };
 export const RecordRightCategory = (props) => {
+  const { setDeleteBanner, setRecordId, deletingRecordId } = useAuth();
   return (
     <div className="w-full h-fit px-6 py-3 flex items-center justify-between bg-[#FFFFFF] rounded-md">
       <div className="w-fit h-fit flex items-center gap-4">
-        <div className="w-5 aspect-square border-[2px] rounded-md"></div>
+        <div
+          className="w-4 aspect-square  rounded-md cursor-pointer"
+          onClick={() => {
+            setRecordId(props.id);
+            setDeleteBanner(true);
+          }}
+        >
+          <img className="w-full h-full" src="/trashcan.png" />
+        </div>
         <div
           className="w-10 h-10 flex justify-center items-center bg-[#fff] rounded-full"
           style={{ backgroundColor: props.color }}

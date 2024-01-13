@@ -7,6 +7,7 @@ const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
 const { Category } = require("./model/category.model");
 const { Record } = require("./model/record.model");
+const { json } = require("stream/consumers");
 
 const app = express();
 app.use(cors());
@@ -118,6 +119,22 @@ app.get("/records", async (req, res) => {
   } catch (error) {
     res.status(409).json({
       message: "Unauthorized in proccesing",
+    });
+  }
+});
+
+app.post("/delete-record", async (req, res) => {
+  try {
+    const { id } = req.body;
+
+    await Record.deleteOne({ _id: id });
+
+    res.json({
+      message: "Record deleted !",
+    });
+  } catch (error) {
+    return res.status(401).json({
+      message: "Error occured",
     });
   }
 });

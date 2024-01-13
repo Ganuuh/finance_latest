@@ -9,9 +9,11 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { AddRecord } from "@/components/AddRecord";
 import { AddCategory } from "@/components/AddCategory";
+import { DeleteBanner } from "@/components/DeleteBanner";
 
 export default function Home() {
-  const { isReady, isLoggedIn } = useAuth();
+  const { isReady, isLoggedIn, records, setTotalIncome, setTotalExpense } =
+    useAuth();
 
   const router = useRouter();
   useEffect(() => {
@@ -20,10 +22,23 @@ export default function Home() {
     }
   }, [isReady, isLoggedIn]);
 
+  useEffect(() => {
+    let income = 0;
+    let expense = 0;
+    records.forEach((each) => {
+      each.type === "expense"
+        ? (expense -= parseInt(each.amount))
+        : (income += parseInt(each.amount));
+    });
+    setTotalExpense(expense);
+    setTotalIncome(income);
+  }, [records]);
+
   if (!isReady) return null;
 
   return (
     <>
+      <DeleteBanner />
       <AddRecord />
       <AddCategory />
       <NavBar />

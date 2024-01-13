@@ -2,7 +2,7 @@
 import { useAuth } from "@/app/layout";
 import { EachCategory } from "./EachCategory";
 export const RecordCategory = () => {
-  const { categories, setCategoryFilter } = useAuth();
+  const { categories, setCategoryFilter, setAddCategory } = useAuth();
   return (
     <div className="w-full h-fit flex flex-col gap-4">
       <div className="w-full h-fit flex justify-between items-center">
@@ -29,7 +29,12 @@ export const RecordCategory = () => {
             />
           );
         })}
-        <div className="w-full h-fit px-3 py-2 flex gap-2 items-center">
+        <div
+          className="w-full h-fit px-3 py-2 flex gap-2 items-center cursor-pointer"
+          onClick={() => {
+            setAddCategory(true);
+          }}
+        >
           <p className="text-[20px] text-[#000]">+</p>
           <p className="w-fit h-fit text-[16px] text-[#1F2937]">Add Category</p>
         </div>

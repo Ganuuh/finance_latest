@@ -8,7 +8,7 @@ import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
 import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown, newIcons, setRecordAdded } = useAuth();
+  const { isShown, setIsShown, setRecordAdded } = useAuth();
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [color, setColor] = useState("");

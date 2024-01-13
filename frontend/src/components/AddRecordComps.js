@@ -35,6 +35,7 @@ export const AddRecordCategory = (props) => {
     categoryAdded,
   } = useAuth();
   useEffect(() => {
+    setIsShown(true);
     getCategory();
   }, [categoryAdded]);
 

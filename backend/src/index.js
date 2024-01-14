@@ -1,5 +1,4 @@
 const express = require("express");
-const fs = require("fs").promises;
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
@@ -7,7 +6,6 @@ const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
 const { Category } = require("./model/category.model");
 const { Record } = require("./model/record.model");
-const { json } = require("stream/consumers");
 
 const app = express();
 app.use(cors());

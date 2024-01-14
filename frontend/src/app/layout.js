@@ -95,6 +95,8 @@ export default function RootLayout({ children }) {
   const [link, setLink] = useState(true);
   const [recordFilter, setRecordFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
+  const [minAmount, setMinAmount] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(40000);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [deleteBannerRecord, setDeleteBannerRecord] = useState(false);
@@ -191,10 +193,13 @@ export default function RootLayout({ children }) {
       .filter((record) => {
         if (categoryFilter === "All") return true;
         return record.category.name === categoryFilter;
+      })
+      .filter((record) => {
+        return parseInt(record.amount) < maxAmount;
       });
 
     setFilteredRecords(a);
-  }, [recordFilter, categoryFilter, recordAdded]);
+  }, [recordFilter, categoryFilter, recordAdded, minAmount, maxAmount]);
   return (
     <html lang="en">
       <Context.Provider
@@ -238,6 +243,10 @@ export default function RootLayout({ children }) {
           setCategoryId,
           deleteBannerCategory,
           setDeleteBannerCategory,
+          minAmount,
+          maxAmount,
+          setMaxAmount,
+          setMinAmount,
         }}
       >
         <body className={inter.className}>

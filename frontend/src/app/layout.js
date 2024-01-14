@@ -36,6 +36,7 @@ import { TbLemon } from "react-icons/tb";
 import { FaPeace } from "react-icons/fa";
 import { PiToiletPaperFill } from "react-icons/pi";
 import { FaPencilAlt } from "react-icons/fa";
+import { parseArgs } from "util";
 
 const newIcons = [
   <MdHomeFilled />,
@@ -95,8 +96,8 @@ export default function RootLayout({ children }) {
   const [link, setLink] = useState(true);
   const [recordFilter, setRecordFilter] = useState("All");
   const [categoryFilter, setCategoryFilter] = useState("All");
-  const [minAmount, setMinAmount] = useState(0);
-  const [maxAmount, setMaxAmount] = useState(40000);
+  const [inputMax, setInputMax] = useState(0);
+  const [maxAmount, setMaxAmount] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [totalExpense, setTotalExpense] = useState(0);
   const [deleteBannerRecord, setDeleteBannerRecord] = useState(false);
@@ -195,11 +196,27 @@ export default function RootLayout({ children }) {
         return record.category.name === categoryFilter;
       })
       .filter((record) => {
-        return parseInt(record.amount) < maxAmount;
+        return parseInt(record.amount) <= maxAmount;
       });
 
     setFilteredRecords(a);
-  }, [recordFilter, categoryFilter, recordAdded, minAmount, maxAmount]);
+  }, [recordFilter, categoryFilter, recordAdded, maxAmount]);
+
+  const findMax = (records) => {
+    let max = 0;
+    records.forEach((record) => {
+      const amount = record.amount;
+      if (amount > max) {
+        max = amount;
+      }
+    });
+    setInputMax(max);
+    console.log(inputMax);
+  };
+
+  useEffect(() => {
+    findMax(records);
+  }, [records, recordAdded]);
   return (
     <html lang="en">
       <Context.Provider
@@ -243,10 +260,9 @@ export default function RootLayout({ children }) {
           setCategoryId,
           deleteBannerCategory,
           setDeleteBannerCategory,
-          minAmount,
+          inputMax,
           maxAmount,
           setMaxAmount,
-          setMinAmount,
         }}
       >
         <body className={inter.className}>

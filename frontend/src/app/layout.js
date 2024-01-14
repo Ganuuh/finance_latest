@@ -194,7 +194,7 @@ export default function RootLayout({ children }) {
       });
 
     setFilteredRecords(a);
-  }, [recordFilter, categoryFilter]);
+  }, [recordFilter, categoryFilter, recordAdded]);
   return (
     <html lang="en">
       <Context.Provider

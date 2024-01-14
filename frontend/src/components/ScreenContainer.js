@@ -8,7 +8,7 @@ export const NavContainer = ({ children }) => {
 
 export const DashboardContainer = ({ children }) => {
   return (
-    <div className="w-[1200px] h-full m-auto flex flex-col gap-6">
+    <div className="w-[1200px] h-fit m-auto flex flex-col gap-6 py-[20px]  mt-[70px]">
       {children}
     </div>
   );
@@ -16,6 +16,8 @@ export const DashboardContainer = ({ children }) => {
 
 export const RecordsContainer = ({ children }) => {
   return (
-    <div className="w-[1200px] h-screen flex items-start gap-9">{children}</div>
+    <div className="w-[1200px] h-screen  flex items-start gap-9">
+      {children}
+    </div>
   );
 };

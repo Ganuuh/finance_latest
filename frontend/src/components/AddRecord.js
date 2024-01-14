@@ -8,25 +8,17 @@ import { AddRecordCategory, AddRecordsRight } from "./AddRecordComps";
 import { api } from "@/common";
 
 export const AddRecord = () => {
-  const { isShown, setIsShown, setRecordAdded } = useAuth();
+  const { isShown, setIsShown, setRecordAdded, recordAdded } = useAuth();
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [color, setColor] = useState("");
   const [icon, setIcon] = useState(1);
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
+  // const [createdAt, setCreatedAt] = useState("");
+  // const [time, setTime] = useState("");
   const [type, setType] = useState("income");
 
-  const postRecord = async (
-    type,
-    amount,
-    category,
-    dateFrom,
-    dateTo,
-    color,
-    icon
-  ) => {
-    const datas = [amount, category, dateFrom, dateTo];
+  const postRecord = async (type, amount, category, color, icon) => {
+    const datas = [amount, category];
     let count = 0;
     datas.forEach((data) => {
       if (data === "") {
@@ -45,8 +37,6 @@ export const AddRecord = () => {
           type,
           amount,
           category,
-          dateFrom,
-          dateTo,
           color,
           icon,
         },
@@ -69,8 +59,6 @@ export const AddRecord = () => {
       setIsShown(false);
       setCategory("");
       setAmount("");
-      setDateTo("");
-      setDateFrom("");
       setCategory("");
       setRecordAdded((prev) => !prev);
     } catch (error) {
@@ -159,15 +147,15 @@ export const AddRecord = () => {
                   setIcon={setIcon}
                   category={category}
                 />
-                <div className="w-full h-fit grid grid-cols-2 gap-3">
+                {/* <div className="w-full h-fit grid grid-cols-2 gap-3">
                   <div className="w-full h-fit flex flex-col items-start gap-1">
                     <label className="w-fit h-fit text-black text-[16px]">
                       Date
                     </label>
                     <input
-                      value={dateFrom}
+                      value={createdAt}
                       onChange={(e) => {
-                        setDateFrom(e.target.value);
+                        setCreatedAt(e.target.value);
                       }}
                       className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
                       type="date"
@@ -178,26 +166,18 @@ export const AddRecord = () => {
                       Date
                     </label>
                     <input
-                      value={dateTo}
+                      value={time}
                       onChange={(e) => {
-                        setDateTo(e.target.value);
+                        setTime(e.target.value);
                       }}
                       className="w-full h-12 border-[1px] rounded-md px-2 bg-[#F9FAFB] text-[#000]"
-                      type="date"
+                      type="time"
                     ></input>
                   </div>
-                </div>
+                </div> */}
                 <div
                   onClick={() => {
-                    postRecord(
-                      type,
-                      amount,
-                      category,
-                      dateFrom,
-                      dateTo,
-                      color,
-                      icon
-                    );
+                    postRecord(type, amount, category, color, icon);
                   }}
                   className={`w-full h-fit py-3 flex justify-center items-center bg-[${
                     type === "expense" ? "#0166FF" : "#16A34A"

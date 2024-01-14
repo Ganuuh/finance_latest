@@ -47,7 +47,7 @@ export default function Home() {
       <AddRecord />
       <AddCategory />
       <NavBar />
-      <div className="w-screen bg-[#F3F4F6] h-fit">
+      <div className="w-screen h-screen bg-[#F3F4F6] overflow-scroll">
         <DashboardContainer>
           <DashboardHead />
           <DashboardMid />

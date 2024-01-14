@@ -78,7 +78,7 @@ app.post("/add-record", async (req, res) => {
 
     const { id } = payload;
 
-    const { type, amount, category, dateTo, dateFrom, color, icon } = req.body;
+    const { type, amount, category, color, icon } = req.body;
 
     Record.create({
       type,
@@ -88,8 +88,7 @@ app.post("/add-record", async (req, res) => {
         color: color,
         icon: icon,
       },
-      dateTo,
-      dateFrom,
+
       userId: id,
     });
 

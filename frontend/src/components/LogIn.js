@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { BigButton } from "./BigButton";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/layout";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,9 +15,11 @@ export const LogIn = () => {
   const [password, setPassword] = useState("");
   const router = useRouter();
 
-  if (localStorage.getItem("token")) {
-    router.push("/dashboard");
-  }
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      router.push("/dashboard");
+    }
+  }, []);
 
   const isPasswordValid = () => {
     if (password === "") {

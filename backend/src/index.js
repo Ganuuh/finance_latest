@@ -129,6 +129,7 @@ app.get("/records", async (req, res) => {
   }
 });
 
+//delete records by id
 app.post("/delete-record", async (req, res) => {
   try {
     const { id } = req.body;
@@ -211,6 +212,7 @@ app.get("/get-categories", async (req, res) => {
   }
 });
 
+//delete categories by id
 app.post("/delete-category", async (req, res) => {
   try {
     const { id } = req.body;

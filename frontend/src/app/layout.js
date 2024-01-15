@@ -204,7 +204,6 @@ export default function RootLayout({ children }) {
   }, [recordFilter, categoryFilter, recordAdded, maxAmount]);
 
   const findMax = (records) => {
-    console.log(records);
     let max = 0;
     records.forEach((record) => {
       const amount = Number(record.amount);
@@ -213,7 +212,6 @@ export default function RootLayout({ children }) {
       }
     });
     setInputMax(max);
-    console.log(inputMax);
   };
 
   useEffect(() => {

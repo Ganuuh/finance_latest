@@ -1,10 +1,21 @@
 "use client";
 import { useAuth } from "@/app/layout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const RecordRightFilter = () => {
   const [date, setDate] = useState(0);
-  const data = ["Today", "3 days", "Week", "30 days"];
+
+  const { setDays } = useAuth();
+  const data = [
+    { date: "Today", number: 0 },
+    { date: "3 days", number: 3 },
+    { date: "Week", number: 7 },
+    { date: "30 days", number: 30 },
+  ];
+
+  useEffect(() => {
+    setDays(data[date].number);
+  }, [date]);
   return (
     <div className="w-full flex h-fit justify-between">
       <div className="w-fit h-full flex gap-4 items-center text-[#000]">
@@ -19,7 +30,7 @@ export const RecordRightFilter = () => {
           }}
         >{`<`}</p>
         <p className="w-[70px] flex justify-center items-center h-fit text-[16px] leading-6">
-          {data[date]}
+          {data[date].date}
         </p>
         <p
           className="w-8 h-8 flex justify-center items-center bg-[#E5E7EB] text-[20px] text-[#0F172A] rounded-md cursor-pointer"

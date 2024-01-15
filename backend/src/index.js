@@ -100,8 +100,6 @@ app.post("/add-record", async (req, res) => {
 app.get("/records", async (req, res) => {
   const { authorization } = req.headers;
 
-  console.log(req.query);
-
   if (!authorization) {
     return res.status(409).json({
       message: "Unauthorized",
@@ -112,10 +110,19 @@ app.get("/records", async (req, res) => {
 
     const { id } = payload;
 
-    const record = await Record.find({ userId: id });
+    const records = await Record.find({ userId: id });
 
-    return res.json(record);
+    const { days } = req.query;
+
+    const date = new Date(Date.now() - 3600 * 1000 * 24 * Number(days));
+
+    const filteredRecords = records.filter(
+      (item) => new Date(item.createdAt) < date
+    );
+
+    return res.json(filteredRecords);
   } catch (error) {
+    console.log(error);
     res.status(409).json({
       message: "Unauthorized in proccesing",
     });

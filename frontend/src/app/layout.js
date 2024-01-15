@@ -104,6 +104,7 @@ export default function RootLayout({ children }) {
   const [deleteBannerCategory, setDeleteBannerCategory] = useState(false);
   const [deletingRecordId, setRecordId] = useState("");
   const [deletingCategoryId, setCategoryId] = useState("");
+  const [days, setDays] = useState(0);
   const myLink = usePathname();
 
   useEffect(() => {
@@ -157,7 +158,7 @@ export default function RootLayout({ children }) {
           Authorization: localStorage.getItem("token"),
         },
         params: {
-          days: 7,
+          days: days,
         },
       });
 
@@ -183,7 +184,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     getRecord();
-  }, [recordAdded]);
+  }, [recordAdded, days]);
 
   useEffect(() => {
     const a = records
@@ -203,9 +204,10 @@ export default function RootLayout({ children }) {
   }, [recordFilter, categoryFilter, recordAdded, maxAmount]);
 
   const findMax = (records) => {
+    console.log(records);
     let max = 0;
     records.forEach((record) => {
-      const amount = record.amount;
+      const amount = Number(record.amount);
       if (amount > max) {
         max = amount;
       }
@@ -263,6 +265,8 @@ export default function RootLayout({ children }) {
           inputMax,
           maxAmount,
           setMaxAmount,
+          days,
+          setDays,
         }}
       >
         <body className={inter.className}>

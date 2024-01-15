@@ -9,6 +9,7 @@ const recordSchema = new Schema(
   },
   { timestamps: true }
 );
+
 const Record = mongoose.model("records", recordSchema);
 
 module.exports = {

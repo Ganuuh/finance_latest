@@ -34,7 +34,7 @@ export default function Home() {
       <AddRecord />
       <AddCategory />
       <NavBar />
-      <div className="w-full h-fit overflow-scroll flex justify-center items-center mt-[70px] p-7 ">
+      <div className="w-full h-screen  overflow-y-scroll flex justify-center items-center mt-[70px] p-7 ">
         <RecordsContainer>
           <RecordsLeft />
           <RecordRight />

@@ -89,7 +89,7 @@ export default function RootLayout({ children }) {
   const [addCategory, setAddCategory] = useState(false);
   const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
-  const [recordsYesterday, setYesterdayRecords] = useState([]);
+  const [dashboardRecords, setDashboardRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
   const [recordAdded, setRecordAdded] = useState(false);
@@ -105,6 +105,7 @@ export default function RootLayout({ children }) {
   const [deletingRecordId, setRecordId] = useState("");
   const [deletingCategoryId, setCategoryId] = useState("");
   const [days, setDays] = useState(0);
+  const [newest, setNewest] = useState(true);
   const myLink = usePathname();
 
   useEffect(() => {
@@ -163,16 +164,12 @@ export default function RootLayout({ children }) {
             0,
             0
           ),
+          newest: newest,
         },
       });
 
-      console.log(
-        new Date(
-          new Date(Date.now() - 3600 * 1000 * 24 * days).setHours(0, 0, 0)
-        )
-      );
-
-      setRecords(res.data);
+      setRecords(res.data[0]);
+      setDashboardRecords(res.data[1]);
     } catch (error) {
       toast.info(error);
     }
@@ -192,7 +189,7 @@ export default function RootLayout({ children }) {
 
   useEffect(() => {
     getRecord();
-  }, [recordAdded, days]);
+  }, [recordAdded, days, newest]);
 
   useEffect(() => {
     const a = records
@@ -274,6 +271,9 @@ export default function RootLayout({ children }) {
           setMaxAmount,
           days,
           setDays,
+          dashboardRecords,
+          setNewest,
+          newest,
         }}
       >
         <body className={inter.className}>

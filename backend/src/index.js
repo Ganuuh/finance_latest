@@ -113,13 +113,19 @@ app.get("/records", async (req, res) => {
 
     const records = await Record.find({ userId: id });
 
-    const { days } = req.query;
+    const { days, newest } = req.query;
 
     const date = new Date(Number(days) + 28800000);
 
     const filteredRecords = records.filter((item) => item.createdAt > date);
 
-    return res.json(filteredRecords);
+    const finalRecords = filteredRecords.sort((a, b) => {
+      return newest == "true"
+        ? b.createdAt - a.createdAt
+        : a.createdAt - b.createdAt;
+    });
+
+    return res.json([finalRecords, records]);
   } catch (error) {
     console.log(error);
     res.status(409).json({

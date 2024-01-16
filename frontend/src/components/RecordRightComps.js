@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 
 export const RecordRightFilter = () => {
   const [date, setDate] = useState(0);
+  const [isShown, setIsShown] = useState(false);
 
-  const { setDays } = useAuth();
+  const { setDays, setNewest, newest } = useAuth();
   const data = [
     { date: "Today", number: 0 },
     { date: "3 days", number: 3 },
@@ -43,9 +44,38 @@ export const RecordRightFilter = () => {
           }}
         >{`>`}</p>
       </div>
-      <div className="w-fit h-12 bg-[#F9FAFB] text-[16px] text-[#000] p-4 flex items-center gap-3 rounded-md">
-        <p>Newest First</p>
-        <img className="w-5 h-5" src="/arrow_drop_down.png" />
+      <div className="w-fit h-12 bg-[#F9FAFB] text-[16px] text-[#000] p-4 flex items-center gap-3 rounded-md relative">
+        <p>{newest ? "Newest first" : "Oldest first"}</p>
+        <img
+          onClick={() => {
+            setIsShown((prev) => !prev);
+          }}
+          className="w-5 h-5 cursor-pointer"
+          src="/arrow_drop_down.png"
+        />
+        <div
+          className="w-full h-fit flex flex-col gap-2 absolute top-[110%] left-0 items-end p-3 bg-[#F9FAFB] border-1 rounded-md"
+          style={{ display: isShown ? "flex" : "none" }}
+        >
+          <div
+            className="w-full h-[30px] border-b-[1px] cursor-pointer"
+            onClick={() => {
+              setNewest(true);
+              setIsShown(false);
+            }}
+          >
+            <p className="text-[14px] text-[#000]">Newest first</p>
+          </div>
+          <div
+            className="w-full h-[30px] border-b-[1px] cursor-pointer"
+            onClick={() => {
+              setNewest(false);
+              setIsShown(false);
+            }}
+          >
+            <p className="text-[14px] text-[#000]">Oldest first</p>
+          </div>
+        </div>
       </div>
     </div>
   );

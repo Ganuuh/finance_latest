@@ -31,7 +31,6 @@ export default function Home() {
     <div className="w-sreen h-fit bg-[#F3F4F6]">
       <DeleteBannerRecord />
       <DeleteBannerCategory />
-
       <AddRecord />
       <AddCategory />
       <NavBar />

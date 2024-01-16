@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import { AddRecord } from "@/components/AddRecord";
 import { AddCategory } from "@/components/AddCategory";
 import {
-  DeleteBanner,
   DeleteBannerCategory,
   DeleteBannerRecord,
 } from "@/components/DeleteBanner";

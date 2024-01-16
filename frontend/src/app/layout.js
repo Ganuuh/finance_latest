@@ -36,7 +36,6 @@ import { TbLemon } from "react-icons/tb";
 import { FaPeace } from "react-icons/fa";
 import { PiToiletPaperFill } from "react-icons/pi";
 import { FaPencilAlt } from "react-icons/fa";
-import { parseArgs } from "util";
 
 const newIcons = [
   <MdHomeFilled />,
@@ -90,6 +89,7 @@ export default function RootLayout({ children }) {
   const [addCategory, setAddCategory] = useState(false);
   const [categories, setCategories] = useState([]);
   const [records, setRecords] = useState([]);
+  const [recordsYesterday, setYesterdayRecords] = useState([]);
   const [filteredRecords, setFilteredRecords] = useState([]);
   const [categoryAdded, setCategoryAdded] = useState(false);
   const [recordAdded, setRecordAdded] = useState(false);
@@ -158,18 +158,27 @@ export default function RootLayout({ children }) {
           Authorization: localStorage.getItem("token"),
         },
         params: {
-          days: days,
+          days: new Date(Date.now() - 3600 * 1000 * 24 * days).setHours(
+            0,
+            0,
+            0
+          ),
         },
       });
 
-      setRecords(res.data);
+      console.log(
+        new Date(
+          new Date(Date.now() - 3600 * 1000 * 24 * days).setHours(0, 0, 0)
+        )
+      );
 
-      setFilteredRecords(res.data);
+      setRecords(res.data);
     } catch (error) {
       toast.info(error);
     }
   };
 
+  console.log(records);
   useEffect(() => {
     setIsReady(false);
 
@@ -201,7 +210,7 @@ export default function RootLayout({ children }) {
       });
 
     setFilteredRecords(a);
-  }, [recordFilter, categoryFilter, recordAdded, maxAmount]);
+  }, [recordFilter, categoryFilter, recordAdded, maxAmount, records]);
 
   const findMax = (records) => {
     let max = 0;
@@ -212,6 +221,7 @@ export default function RootLayout({ children }) {
       }
     });
     setInputMax(max);
+    setMaxAmount(max);
   };
 
   useEffect(() => {

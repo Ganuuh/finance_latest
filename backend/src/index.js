@@ -6,6 +6,7 @@ const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
 const { Category } = require("./model/category.model");
 const { Record } = require("./model/record.model");
+const { addListener } = require("process");
 
 const app = express();
 app.use(cors());
@@ -114,11 +115,9 @@ app.get("/records", async (req, res) => {
 
     const { days } = req.query;
 
-    const date = new Date(Date.now() - 3600 * 1000 * 24 * Number(days));
+    const date = new Date(Number(days) + 28800000);
 
-    const filteredRecords = records.filter(
-      (item) => new Date(item.createdAt) < date
-    );
+    const filteredRecords = records.filter((item) => item.createdAt > date);
 
     return res.json(filteredRecords);
   } catch (error) {

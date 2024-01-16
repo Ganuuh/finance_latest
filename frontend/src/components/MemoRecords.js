@@ -4,17 +4,19 @@ import { useAuth } from "@/app/layout";
 import { useMemo } from "react";
 import { LastRecord } from "./LastRecord";
 import { RecordRightCategory } from "./RecordRightComps";
+import { format } from "date-fns";
 
 export const DashBoardRecordMemo = () => {
-  const { filteredRecords, newIcons, recordAdded } = useAuth();
+  const { newIcons, records } = useAuth();
 
   const list = useMemo(() => {
     return (
       <>
-        {filteredRecords.map((each, index) => {
+        {records.map((each, index) => {
           return (
             <LastRecord
               key={index}
+              date={format(each.createdAt, "yyyy-MM-dd")}
               icon={newIcons[each.category.icon]}
               color={each.category.color}
               title={each.category.name}
@@ -25,13 +27,13 @@ export const DashBoardRecordMemo = () => {
         })}
       </>
     );
-  }, [filteredRecords, recordAdded]);
+  }, [records]);
 
   return list;
 };
 
 export const RecordRecordMemoToday = () => {
-  const { newIcons, filteredRecords, recordAdded } = useAuth();
+  const { newIcons, filteredRecords } = useAuth();
 
   const list = useMemo(() => {
     return (
@@ -51,6 +53,7 @@ export const RecordRecordMemoToday = () => {
               <RecordRightCategory
                 key={index}
                 id={each._id}
+                date={each.createdAt.slice(0, 10)}
                 icon={newIcons[each.category.icon]}
                 color={each.category.color}
                 title={each.category.name}
@@ -62,12 +65,12 @@ export const RecordRecordMemoToday = () => {
         )}
       </div>
     );
-  }, [filteredRecords, recordAdded]);
+  }, [filteredRecords]);
   return list;
 };
 
 export const RecordRecordMemoYesterday = () => {
-  const { filteredRecords, newIcons, recordAdded } = useAuth();
+  const { filteredRecords, newIcons } = useAuth();
 
   const list = useMemo(() => {
     return (
@@ -97,6 +100,6 @@ export const RecordRecordMemoYesterday = () => {
         )}
       </div>
     );
-  }, [filteredRecords, recordAdded]);
+  }, [filteredRecords]);
   return list;
 };

@@ -72,7 +72,9 @@ export const RecordRightCategory = (props) => {
         </div>
         <div className="w-fit h-full flex flex-col items-start justify-between">
           <p className="text-4 w-fit h-fit text-black">{props.title}</p>
-          <p className="text-3 w-fit h-fit text-[#6B7280]">14:00</p>
+          <p className="text-3 w-fit h-fit text-[#6B7280] text-[12px]">
+            {props.date}
+          </p>
         </div>
       </div>
       <p

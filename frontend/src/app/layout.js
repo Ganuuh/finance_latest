@@ -178,7 +178,6 @@ export default function RootLayout({ children }) {
     }
   };
 
-  console.log(records);
   useEffect(() => {
     setIsReady(false);
 

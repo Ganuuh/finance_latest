@@ -15,8 +15,13 @@ import {
 } from "@/components/DeleteBanner";
 
 export default function Home() {
-  const { isReady, isLoggedIn, records, setTotalIncome, setTotalExpense } =
-    useAuth();
+  const {
+    isReady,
+    isLoggedIn,
+    dashboardRecords,
+    setTotalIncome,
+    setTotalExpense,
+  } = useAuth();
 
   const router = useRouter();
   useEffect(() => {
@@ -28,14 +33,14 @@ export default function Home() {
   useEffect(() => {
     let income = 0;
     let expense = 0;
-    records.forEach((each) => {
+    dashboardRecords.forEach((each) => {
       each.type === "expense"
-        ? (expense -= parseInt(each.amount))
-        : (income += parseInt(each.amount));
+        ? (expense -= Number(each.amount))
+        : (income += Number(each.amount));
     });
     setTotalExpense(expense);
     setTotalIncome(income);
-  }, [records]);
+  }, [dashboardRecords]);
 
   if (!isReady) return null;
 

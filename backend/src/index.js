@@ -6,7 +6,6 @@ const { connectToDatabase } = require("./database");
 const { User } = require("./model/user.model");
 const { Category } = require("./model/category.model");
 const { Record } = require("./model/record.model");
-const { addListener } = require("process");
 
 const app = express();
 app.use(cors());
@@ -235,7 +234,6 @@ app.post("/delete-category", async (req, res) => {
 });
 
 const port = 8008;
-
 app.listen(port, () => {
   console.log("App is listening on port ", port);
 });

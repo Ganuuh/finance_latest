@@ -192,7 +192,7 @@ app.post("/categories", async (req, res) => {
   }
 });
 
-//Get categories by email
+//Get categories by user id
 app.get("/get-categories", async (req, res) => {
   const { authorization } = req.headers;
 

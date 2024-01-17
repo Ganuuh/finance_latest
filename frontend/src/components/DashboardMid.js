@@ -11,7 +11,6 @@ import {
   Title,
 } from "chart.js";
 
-import { faker } from "@faker-js/faker";
 import { Bar } from "react-chartjs-2";
 import { useAuth } from "@/app/layout";
 import { format } from "date-fns";
@@ -30,21 +29,7 @@ ChartJS.register(
 export const DashboardMid = () => {
   const { dashboardRecords, inputMax, recordAdded } = useAuth();
   const [inEx, setInEx] = useState([]);
-  const [month, setMonth] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-  const [example, setExample] = useState([]);
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "bottom",
-      },
-      title: {
-        display: true,
-      },
-    },
-  };
-
-  const labels = [
+  const [labels, setLabels] = useState([
     "Jan",
     "Feb",
     "Mar",
@@ -57,17 +42,49 @@ export const DashboardMid = () => {
     "Oct",
     "Nov",
     "Dec",
-  ];
+  ]);
+  const [example, setExample] = useState([]);
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom",
+      },
+      title: {
+        display: true,
+      },
+    },
+  };
+
+  const createData = () => {
+    for (let i = 1; i < 13; i++) {
+      let array = [];
+      dashboardRecords.forEach((record) => {
+        if (Number(format(record.createdAt, "MM")) === i) {
+          array.push(record);
+        }
+      });
+      console.log(array);
+      if (array.length === 0) {
+        setExample(example.push({ in: 0, ex: 0 }));
+      } else {
+        let income = 0;
+        let expense = 0;
+        dashboardRecords.forEach((each) => {
+          each.type === "income"
+            ? (income += Number(each.amount))
+            : (expense += Number(each.amount));
+        });
+        setExample(example.push({ in: income, ex: expense }));
+      }
+    }
+    console.log(example);
+  };
 
   useEffect(() => {
-    const array = month.forEach((each) => {
-      return each;
-    });
-
-    setExample(array);
+    createData();
   }, [recordAdded]);
-
-  console.log(example);
 
   const data = {
     labels,

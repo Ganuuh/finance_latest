@@ -28,7 +28,20 @@ ChartJS.register(
 
 export const DashboardMid = () => {
   const { dashboardRecords, inputMax, recordAdded } = useAuth();
-  const [inEx, setInEx] = useState([]);
+  const [inEx, setInEx] = useState([
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+    { expense: 0, income: 0 },
+  ]);
   const [labels, setLabels] = useState([
     "Jan",
     "Feb",
@@ -43,7 +56,6 @@ export const DashboardMid = () => {
     "Nov",
     "Dec",
   ]);
-  const [example, setExample] = useState([]);
 
   const options = {
     responsive: true,
@@ -58,28 +70,43 @@ export const DashboardMid = () => {
   };
 
   const createData = () => {
-    for (let i = 1; i < 13; i++) {
-      let array = [];
-      dashboardRecords.forEach((record) => {
-        if (Number(format(record.createdAt, "MM")) === i) {
-          array.push(record);
-        }
-      });
-      console.log(array);
-      if (array.length === 0) {
-        setExample(example.push({ in: 0, ex: 0 }));
-      } else {
-        let income = 0;
-        let expense = 0;
-        dashboardRecords.forEach((each) => {
-          each.type === "income"
-            ? (income += Number(each.amount))
-            : (expense += Number(each.amount));
-        });
-        setExample(example.push({ in: income, ex: expense }));
-      }
-    }
-    console.log(example);
+    // dashboardRecords.forEach((record) => {
+    //   record.type === "income"
+    //     ? setInEx(
+    //         inEx[Number(format(record.createdAt, "MM")) - 1].income +
+    //           Number(record.amount)
+    //       )
+    //     : setInEx(
+    //         inEx[Number(format(record.createdAt, "MM")) - 1].expense +
+    //           Number(record.amount)
+    //       );
+    // });
+    dashboardRecords.forEach((records) => {
+      // if (records.type === "income") {
+      //   setInEx(
+      //     (inEx[Number(format(records.createdAt, "MM")) - 1].income += Number(
+      //       records.amount
+      //     ))
+      //   );
+      // } else {
+      //   setInEx(
+      //     (inEx[Number(format(records.createdAt, "MM")) - 1].expense += Number(
+      //       records.amount
+      //     ))
+      //   );
+      // }
+      records.type === "income"
+        ? setInEx(
+            (inEx[Number(format(records.createdAt, "MM")) - 1].income += Number(
+              records.amount
+            ))
+          )
+        : setInEx(
+            (inEx[Number(format(records.createdAt, "MM")) - 1].expense +=
+              Number(records.amount))
+          );
+    });
+    console.log(inEx);
   };
 
   useEffect(() => {
@@ -91,12 +118,12 @@ export const DashboardMid = () => {
     datasets: [
       {
         label: "Income",
-        data: inEx.map((each) => each.in),
+        data: inEx.map((each) => each.income),
         backgroundColor: "rgba(132, 204, 22, 1)",
       },
       {
         label: "Expense",
-        data: inEx.map((each) => each.ex),
+        data: inEx.map((each) => each.expense),
         backgroundColor: "rgba(249, 115, 22, 1)",
       },
     ],

@@ -1,6 +1,4 @@
-// "use client";
 export const DynamicStep = (props) => {
-  // const number = props.number;
   return (
     <div className="w-fit h-fit flex gap-[40px] relative justify-center">
       <div className="w-[45px] h-fit flex flex-col items-center gap-2 z-20">

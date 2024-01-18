@@ -58,11 +58,9 @@ export const DashboardMid = () => {
     "Dec",
   ]);
 
-  const [categories, setCategories] = useState([]);
+  const [dougnutLabel, setDlabel] = useState(["Books", "Car", "Hobby"]);
 
   const [categoryLabel, setClabel] = useState([]);
-
-  const [number, setNumber] = useState(5);
 
   const options = {
     responsive: true,
@@ -77,6 +75,7 @@ export const DashboardMid = () => {
   };
 
   // const createData = () => {
+  //
   //   dashboardRecords.forEach((records) => {
   //     records.type === "income"
   //       ? setInEx(
@@ -90,63 +89,70 @@ export const DashboardMid = () => {
   //         );
   //   });
   //   console.log(inEx);
+  //
   // };
 
   // useEffect(() => {
   //   createData();
   // }, [recordAdded]);
 
-  // const getCategory = async () => {
-  //   try {
-  //     const res = await api.get("/get-categories", {
-  //       headers: { Authorization: localStorage.getItem("token") },
-  //     });
+  // // const getCategory = async () => {
+  // //   try {
+  // //     const res = await api.get("/get-categories", {
+  // //       headers: { Authorization: localStorage.getItem("token") },
+  // //     });
 
-  //     setCategories(res.data);
-  //   } catch (error) {
-  //     console.log(error);
+  // //     setCategories(res.data);
+  // //   } catch (error) {
+  // //     console.log(error);
+  // //   }
+  // // };
+
+  // useEffect(() => {
+  //   labelCreater();
+  // }, [recordAdded]);
+
+  // const labelCreater = () => {
+  //   for (let i = 0; i < dashboardRecords.length; i++) {
+  //     let count = 0;
+  //     for (let j = 0; j < dashboardRecords.length; j++) {
+  //       dashboardRecords[i].category.name === dashboardRecords[j].category.name
+  //         ? count++
+  //         : null;
+  //     }
+  //     if (categoryLabel.length === 0) {
+  //       setClabel(
+  //         categoryLabel.push({
+  //           name: dashboardRecords[i].category.name,
+  //           c: count,
+  //         })
+  //       );
+  //     } else {
+  //       let counter = 0;
+  //       for (let c = 0; c < categoryLabel.length; c++) {
+  //         if (categoryLabel[c].name === dashboardRecords[i].category.name) {
+  //           counter++;
+  //         }
+  //       }
+  //       if (counter === 0) {
+  //         setClabel(
+  //           categoryLabel.push({
+  //             name: dashboardRecords[i].category.name,
+  //             c: count,
+  //           })
+  //         );
+  //         counter = 0;
+  //       }
+  //     }
   //   }
+  //   setClabel(
+  //     categoryLabel.sort((a, b) => {
+  //       return b.c - a.c;
+  //     })
+  //   );
+
+  //   console.log(categoryLabel);
   // };
-
-  useEffect(() => {
-    labelCreater();
-  }, [recordAdded]);
-
-  const labelCreater = () => {
-    // let array = [];
-    for (let i = 0; i < dashboardRecords.length; i++) {
-      let count = 0;
-      for (let j = 0; j < dashboardRecords.length; j++) {
-        dashboardRecords[i].category.name === dashboardRecords[j].category.name
-          ? count++
-          : null;
-      }
-      if (categoryLabel.length === 0) {
-        setClabel(
-          categoryLabel.push({
-            name: dashboardRecords[i].category.name,
-            c: count,
-          })
-        );
-      } else {
-        categoryLabel.forEach((each) => {
-          if (each.name === dashboardRecords[i].category.name) {
-            return;
-          }
-        });
-      }
-    }
-    // categoryLabel.forEach((each) => {
-    //   if (!array.includes(each)) {
-    //     array.push(each);
-    //   }
-    // });
-    // console.log(array, "ARRAY");
-
-    let array = [{ name: "Books", c: 8 }];
-    console.log(categoryLabel[0]);
-    console.log(array[0].name.includes(categoryLabel[0].name));
-  };
 
   const barData = {
     labels,
@@ -163,9 +169,16 @@ export const DashboardMid = () => {
       },
     ],
   };
-  // const doughnutData = {
-  //   labels,
-  // };
+  const doughnutData = {
+    dougnutLabel,
+    datasets: [
+      {
+        label: "Income",
+        data: inEx.map((each) => each.income),
+        backgroundColor: "rgba(132, 204, 22, 1)",
+      },
+    ],
+  };
   return (
     <div className="w-full h-fit grid grid-cols-2 gap-[35px]">
       <div className="w-full h-fit flex flex-col items-center rounded-md bg-[#FFFFFF]">
@@ -182,7 +195,7 @@ export const DashboardMid = () => {
           <p className="text-[#6B7280] text-[16px]">Jun 1 - Nov 30</p>
         </div>
         <div className="w-full h-[226px]">
-          {/* <Doughnut data={doughnutData} options={options} /> */}
+          <Doughnut data={doughnutData} options={options} />
         </div>
       </div>
     </div>

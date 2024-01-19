@@ -30,7 +30,7 @@ ChartJS.register(
 export const DashboardMid = () => {
   const { dashboardRecords, inputMax, recordAdded, categoryAdded } = useAuth();
   const [inEx, setInEx] = useState([
-    { expense: 0, income: 1000 },
+    { expense: 40000, income: 100000 },
     { expense: 0, income: 0 },
     { expense: 0, income: 0 },
     { expense: 0, income: 0 },
@@ -41,7 +41,7 @@ export const DashboardMid = () => {
     { expense: 0, income: 0 },
     { expense: 0, income: 0 },
     { expense: 0, income: 0 },
-    { expense: 300, income: 100 },
+    { expense: 30000, income: 0 },
   ]);
   const [labels, setLabels] = useState([
     "Jan",
@@ -75,7 +75,6 @@ export const DashboardMid = () => {
   };
 
   // const createData = () => {
-  //
   //   dashboardRecords.forEach((records) => {
   //     records.type === "income"
   //       ? setInEx(
@@ -89,12 +88,11 @@ export const DashboardMid = () => {
   //         );
   //   });
   //   console.log(inEx);
-  //
   // };
 
   // useEffect(() => {
   //   createData();
-  // }, [recordAdded]);
+  // }, []);
 
   // // const getCategory = async () => {
   // //   try {
@@ -110,7 +108,7 @@ export const DashboardMid = () => {
 
   // useEffect(() => {
   //   labelCreater();
-  // }, [recordAdded]);
+  // }, []);
 
   // const labelCreater = () => {
   //   for (let i = 0; i < dashboardRecords.length; i++) {
@@ -169,6 +167,7 @@ export const DashboardMid = () => {
       },
     ],
   };
+
   const doughnutData = {
     dougnutLabel,
     datasets: [
